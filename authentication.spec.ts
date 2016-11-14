@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { AuthenticationContext } from './authentication.context';
 import { Authentication } from './authentication';
-import { LocalStorage } from './LocalStorage';
+import { LocalStorage } from './local.storage';
 import { AdalConfig } from './AdalConfig';
 import { Navigator } from './Navigator';
 import { AadUrlBuilder } from "./AadUrlBuilder";

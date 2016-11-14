@@ -1,11 +1,13 @@
 /// <reference path="./node_modules/@types/jasmine/index.d.ts" />
 import { AuthenticationContext } from "./authentication.context";
-import { LocalStorage } from './LocalStorage';
+import { LocalStorage } from './local.storage';
 import { Navigator } from './Navigator';
 import { AadUrlBuilder } from "./AadUrlBuilder";
 import { GuidGenerator } from "./guid.generator";
+import { UserDecoder } from './user.decoder';
 import { Constants } from "./Constants";
-import { ATenantConfig, ATenantUrl } from "./scenario/AAdalConfig";
+import { ATenantConfig, ATenantUrl } from "./scenario/a.production.adal.config";
+import { AadProductionTokenSample, AadProductionUserProfileSample } from "./scenario/a.production.aad.response";
 import * as _ from "lodash";
 
 describe('AuthenticationContext', () => {
@@ -17,10 +19,11 @@ describe('AuthenticationContext', () => {
         this.navigator = new Navigator();
         this.guidGenerator = new GuidGenerator();
         this.aadUrlBuilder = new AadUrlBuilder(this.guidGenerator);
+        this.userDecoder = new UserDecoder();
     });
 
     beforeEach(() => {
-        this.sut = new AuthenticationContext(this.config, this.localStorage, this.navigator, this.guidGenerator, this.aadUrlBuilder);
+        this.sut = new AuthenticationContext(this.config, this.localStorage, this.navigator, this.guidGenerator, this.aadUrlBuilder, this.userDecoder);
     });
 
     it('login should build the url', () => {
@@ -36,7 +39,6 @@ describe('AuthenticationContext', () => {
     });
 
     it('login should navigate to aad url', () => {
-        const context = new AuthenticationContext(ATenantConfig, this.localStorage, this.navigator, this.guidGenerator, this.aadUrlBuilder);
         spyOn(this.navigator, 'navigate').and.returnValue('xxx');
         spyOn(this.guidGenerator, 'generate').and.returnValue('xxx');
 
@@ -47,7 +49,6 @@ describe('AuthenticationContext', () => {
     });
 
     it('login should store its state', () => {
-        const context = new AuthenticationContext(this.config, this.localStorage, this.navigator, this.guidGenerator, this.aadUrlBuilder);
         spyOn(this.localStorage, 'setItem');
         spyOn(this.guidGenerator, 'generate').and.returnValue('xxx');
         spyOn(this.navigator, 'navigate');
@@ -59,6 +60,20 @@ describe('AuthenticationContext', () => {
         expect(this.localStorage.setItem.calls.argsFor(3)).toEqual([Constants.STORAGE.LOGIN_ERROR, '']);
         expect(this.localStorage.setItem.calls.argsFor(4)).toEqual([Constants.STORAGE.ERROR, '']);
         expect(this.localStorage.setItem.calls.argsFor(5)).toEqual([Constants.STORAGE.ERROR_DESCRIPTION, '']);
+    });
+
+    it('getUser should return stored decoded idtoken ', () => {
+
+        spyOn(this.localStorage, 'setItem').and.callFake(function () {
+            return AadProductionTokenSample;
+        });
+        spyOn(this.userDecoder, 'decode').and.callThrough();
+
+        let user = this.sut.getUser();
+
+        expect(this.userDecoder.decode).toHaveBeenCalledWith(AadProductionTokenSample);
+        expect(user).toEqual(AadProductionUserProfileSample);
+
     });
 
 });

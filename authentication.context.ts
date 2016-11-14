@@ -1,8 +1,9 @@
 import { GuidGenerator } from './guid.generator';
-import { Storage } from './IStorage';
+import { Storage } from './storage';
 import { Constants, RequestTypes } from './Constants';
 import { Navigator } from './Navigator';
 import { AadUrlBuilder } from './AadUrlBuilder';
+import { UserDecoder } from './user.decoder';
 import { AdalConfig } from './AdalConfig';
 
 export class AuthenticationContext {
@@ -15,15 +16,17 @@ export class AuthenticationContext {
     private navigator: Navigator;
     private guidGenerator: GuidGenerator;
     private aadUrlBuilder: AadUrlBuilder;
+    private userDecoder: UserDecoder;
     private CONSTANTS = Constants;
     private REQUEST_TYPES = RequestTypes;
 
-    constructor(config: AdalConfig, storage: Storage, navigator: Navigator, guidGenerator: GuidGenerator, aadUrlBuilder: AadUrlBuilder) {
+    constructor(config: AdalConfig, storage: Storage, navigator: Navigator, guidGenerator: GuidGenerator, aadUrlBuilder: AadUrlBuilder, userDecoder: UserDecoder) {
         this.storage = storage;
         this.navigator = navigator;
         this.config = config;
         this.guidGenerator = guidGenerator;
         this.aadUrlBuilder = aadUrlBuilder;
+        this.userDecoder = userDecoder;
     }
 
     public login(): void {
@@ -59,14 +62,10 @@ export class AuthenticationContext {
         }
     }
 
-    public getCachedUser(): any {
-        // if (this.user) {
-        //     return this.user;
-        // }
-
-        // let idtoken = this.storage.getItem(this.CONSTANTS.STORAGE.IDTOKEN);
-        // this.user = this.createUser(idtoken);
-        // return this._user;
+    public getUser(): any {
+        let idtoken = this.storage.getItem(Constants.STORAGE.IDTOKEN);
+        let user = this.userDecoder.decode(idtoken);
+        return user;
     }
 
     private verbose(message: string): void {

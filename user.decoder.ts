@@ -11,22 +11,11 @@ export class UserDecoder {
 
         var decodedPayLoad = this.safeDecodeBase64(jwtDecoded.JWSPayload);
 
-        let parsedUser = JSON.parse(decodedPayLoad);
+        let user = JSON.parse(decodedPayLoad);
 
-        if (!parsedUser || !parsedUser.hasOwnProperty('aud')) throw new Error('');
+        if (!user || !user.hasOwnProperty('aud')) throw new Error('');
 
         //if (parsedUser.aud.toLowerCase() === this.config.clientId.toLowerCase()) {
-
-        let user = {
-            userName: '',
-            profile: parsedUser
-        };
-
-        if (parsedUser.hasOwnProperty('upn')) {
-            user.userName = parsedUser.upn;
-        } else if (parsedUser.hasOwnProperty('email')) {
-            user.userName = parsedUser.email;
-        }
 
         return user;
 

@@ -1,4 +1,4 @@
-import { Storage } from './IStorage';
+import { Storage } from './storage';
 export class LocalStorage implements Storage {
     public setItem(key: string, value: string): void {
         localStorage.setItem(key, value);
