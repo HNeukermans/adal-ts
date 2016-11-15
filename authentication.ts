@@ -2,15 +2,13 @@ import { Injectable } from '@angular/core';
 import { AuthenticationContext } from './authentication.context';
 import { LocalStorage } from './local.storage';
 import { Navigator } from './Navigator';
-import { AadUrlBuilder } from "./AadUrlBuilder";
+import { AadUrlBuilder } from "./aad.url.builder";
 import { GuidGenerator } from "./guid.generator";
 import { Constants } from "./Constants";
 import { UserDecoder } from './user.decoder';
-import { AdalConfig } from "./AdalConfig";
+import { AdalConfig } from "./adal.config";
 import { AadRedirectProcessor } from './aad.redirect.processor';
 import { QueryStringDeserializer, hasAadProps } from './query.string.deserializer';
-//import { AdalAuthenticationContext } from './adal.authentication.context';
-//declare let Logging: adal.Logging;
 
 @Injectable()
 export class Authentication {
@@ -35,7 +33,11 @@ export class Authentication {
 
     public static getAadRedirectProcessor() {
 
-        let p = new AadRedirectProcessor(new QueryStringDeserializer(), new UserDecoder(), new LocalStorage(), window);
+        let p = new AadRedirectProcessor(
+            new QueryStringDeserializer(),
+            new UserDecoder(),
+            new LocalStorage(),
+            window);
         return p;
     }
 }

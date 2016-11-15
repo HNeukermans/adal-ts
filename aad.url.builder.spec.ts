@@ -1,5 +1,4 @@
-/// <reference path="./node_modules/@types/jasmine/index.d.ts" />
-import { AadUrlBuilder } from "./AadUrlBuilder";
+import { AadUrlBuilder } from './aad.url.builder';
 import { GuidGenerator } from "./guid.generator";
 import { AadUrlConfig } from "./AadUrlConfig";
 import * as _ from "lodash";

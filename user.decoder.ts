@@ -1,24 +1,22 @@
+import { User } from './user';
+
 declare function escape(v: string): string;
 
-
 export class UserDecoder {
-    public decode(encoded: string): any {
+    public decode(encoded: string): User {
 
         var jwtDecoded = this.decodeJwt(encoded);
         if (!jwtDecoded) {
-            throw Error('Failed to JWT decode value. Value has invalid format.');
+            throw Error('Failed to decode value. Value has invalid format.');
         }
 
         var decodedPayLoad = this.safeDecodeBase64(jwtDecoded.JWSPayload);
 
         let user = JSON.parse(decodedPayLoad);
 
-        if (!user || !user.hasOwnProperty('aud')) throw new Error('');
+        //if (!user || !user.hasOwnProperty('aud')) throw new Error('');
 
-        //if (parsedUser.aud.toLowerCase() === this.config.clientId.toLowerCase()) {
-
-        return user;
-
+        return <User>user;
     }
 
     private safeDecodeBase64(value: string) {

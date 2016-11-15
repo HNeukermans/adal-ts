@@ -2,9 +2,10 @@ import { GuidGenerator } from './guid.generator';
 import { Storage } from './storage';
 import { Constants, RequestTypes } from './Constants';
 import { Navigator } from './Navigator';
-import { AadUrlBuilder } from './AadUrlBuilder';
+import { AadUrlBuilder } from './aad.url.builder';
 import { UserDecoder } from './user.decoder';
-import { AdalConfig } from './AdalConfig';
+import { AdalConfig } from './adal.config';
+import { AadLogoutUrlBuilder } from './aad.logout.url.builder';
 
 export class AuthenticationContext {
 
@@ -17,16 +18,20 @@ export class AuthenticationContext {
     private guidGenerator: GuidGenerator;
     private aadUrlBuilder: AadUrlBuilder;
     private userDecoder: UserDecoder;
+    private logoutUrlBuilder: AadLogoutUrlBuilder;
     private CONSTANTS = Constants;
     private REQUEST_TYPES = RequestTypes;
 
-    constructor(config: AdalConfig, storage: Storage, navigator: Navigator, guidGenerator: GuidGenerator, aadUrlBuilder: AadUrlBuilder, userDecoder: UserDecoder) {
+    constructor(
+        config: AdalConfig, storage: Storage, navigator: Navigator, guidGenerator: GuidGenerator,
+        aadUrlBuilder: AadUrlBuilder, userDecoder: UserDecoder, logoutUrlBuilder: AadLogoutUrlBuilder) {
         this.storage = storage;
         this.navigator = navigator;
         this.config = config;
         this.guidGenerator = guidGenerator;
         this.aadUrlBuilder = aadUrlBuilder;
         this.userDecoder = userDecoder;
+        this.logoutUrlBuilder = logoutUrlBuilder;
     }
 
     public login(): void {
@@ -54,19 +59,26 @@ export class AuthenticationContext {
         this.loginInProgress = true;
     }
 
-    private createOptions(): any {
-        return {
-            nonce: this.idTokenNonce,
-            tenant: this.config.tenant,
-            clientId: this.config.clientId
-        }
-    }
-
     public getUser(): any {
         let idtoken = this.storage.getItem(Constants.STORAGE.IDTOKEN);
+        if (idtoken === '') return null;
         let user = this.userDecoder.decode(idtoken);
         return user;
     }
+
+    public logout(): void {
+        let idtoken = this.storage.getItem(Constants.STORAGE.IDTOKEN);
+        if (idtoken === '') return null;
+
+        this.storage.setItem(this.CONSTANTS.STORAGE.NONCE_IDTOKEN, '');
+        this.storage.setItem(this.CONSTANTS.STORAGE.STATE_LOGIN, '');
+        this.storage.setItem(this.CONSTANTS.STORAGE.IDTOKEN, '');
+
+        let url = this.logoutUrlBuilder.with(this.config.tenant, this.config.postLogoutRedirectUrl).build();
+
+        this.navigator.navigate(url);
+    }
+
 
     private verbose(message: string): void {
 
@@ -75,6 +87,14 @@ export class AuthenticationContext {
 
     private info(message: string): void {
 
+    }
+
+    private createOptions(): any {
+        return {
+            nonce: this.idTokenNonce,
+            tenant: this.config.tenant,
+            clientId: this.config.clientId
+        }
     }
 
     private cloneConfig(obj: any) {
