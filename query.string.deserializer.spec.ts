@@ -1,8 +1,8 @@
 /// <reference path="./node_modules/@types/jasmine/index.d.ts" />
 import { AuthenticationContext } from "./authentication.context";
 import { QueryStringDeserializer } from './query.string.deserializer';
-import { Constants } from "./Constants";
-import { ATenantConfig, ATenantUrl } from "./scenario/AAdalConfig";
+import { Constants } from "./constants";
+import { ATenantConfig, ATenantUrl } from "./scenario/a.production.adal.config";
 import * as _ from "lodash";
 
 describe('QueryStringDeserializer', () => {

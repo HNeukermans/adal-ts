@@ -1,5 +1,5 @@
 import { QueryStringDeserializer, hasAadProps } from './query.string.deserializer';
-import { Constants } from './Constants';
+import { Constants } from './constants';
 import { AadRedirectUrl } from './aad.redirect.url';
 import { UserDecoder } from './user.decoder';
 import { Storage } from './Storage';

@@ -1,5 +1,5 @@
 import { GuidGenerator } from './guid.generator';
-import { AadUrlConfig } from './AadUrlConfig';
+import { AadUrlConfig } from './aad.url.config';
 export class AadLogoutUrlBuilder {
 
     private tenant: string;

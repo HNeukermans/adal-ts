@@ -1,5 +1,5 @@
 import { AadLogoutUrlBuilder } from './aad.logout.url.builder';
-import { AadUrlConfig } from "./AadUrlConfig";
+import { AadUrlConfig } from "./aad.url.config";
 import * as _ from "lodash";
 
 describe('AadLogoutUrlBuilder', () => {

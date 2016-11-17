@@ -1,7 +1,7 @@
 import { GuidGenerator } from './guid.generator';
 import { Storage } from './storage';
-import { Constants, RequestTypes } from './Constants';
-import { Navigator } from './Navigator';
+import { Constants, RequestTypes } from './constants';
+import { Navigator } from './navigator';
 import { AadUrlBuilder } from './aad.url.builder';
 import { UserDecoder } from './user.decoder';
 import { AdalConfig } from './adal.config';
@@ -51,7 +51,7 @@ export class AuthenticationContext {
         this.storage.setItem(this.CONSTANTS.STORAGE.LOGIN_ERROR, '');
         this.storage.setItem(this.CONSTANTS.STORAGE.ERROR, '');
         this.storage.setItem(this.CONSTANTS.STORAGE.ERROR_DESCRIPTION, '');
-        debugger;
+
         let url = this.aadUrlBuilder.with(urlConfig).build();
 
         this.navigator.navigate(url);

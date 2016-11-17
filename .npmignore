@@ -5,9 +5,20 @@ npm-debug.log
 Thumbs.db
 .DS_Store
 
+.vscode
+
+.npmignore
+
+!dist
+
+scenario
+
 # TypeScript source files, apart generated type definitions
-*.ts
-!*.d.ts
+**/*.ts
+!**/*.d.ts
+
+adal.js
+adal.d.ts
 
 # Other generated files
 *.spec.*
@@ -17,3 +28,7 @@ Thumbs.db
 .travis.yml
 karma.*
 tsconfig.*
+
+dist/scenario
+
+webpack.config.js

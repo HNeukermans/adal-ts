@@ -1,6 +1,6 @@
 import { AadUrlBuilder } from './aad.url.builder';
 import { GuidGenerator } from "./guid.generator";
-import { AadUrlConfig } from "./AadUrlConfig";
+import { AadUrlConfig } from "./aad.url.config";
 import * as _ from "lodash";
 
 describe('AadUrlBuilder', () => {
