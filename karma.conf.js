@@ -6,6 +6,7 @@ module.exports = function (config) {
         frameworks: ["jasmine"],
         // list of files / patterns to load in the browser
         files: [
+            //{ pattern: 'dist/*.js', included: true },
             { pattern: '*.spec.ts', watched: true }
         ],
 
@@ -13,7 +14,10 @@ module.exports = function (config) {
         exclude: [],
 
         preprocessors: {
-            '*.spec.ts': ['webpack', 'sourcemap']
+            '*.spec.ts': ['webpack', 'sourcemap'],
+            //'*.ts': ['webpack', 'sourcemap', 'coverage'],
+            //'**/!(*.spec)+(.js)': ['coverage']
+            //'**/*.js': ['coverage']
         },
 
 
@@ -48,7 +52,7 @@ module.exports = function (config) {
         // if true, it capture browsers, run tests and exit
         singleRun: false,
 
-        reporters: ['progress'],
+        reporters: ['progress', 'coverage'],
 
         webpack: {
             resolve: {
@@ -57,14 +61,45 @@ module.exports = function (config) {
             module: {
                 loaders: [
                     { test: /\.ts$/, loader: 'awesome-typescript-loader' }
+                ],
+                postLoaders: [
+                    // instrument only testing sources with Istanbul
+                    {
+                        test: /\.(js|ts)$/,
+                        //include: helpers.root('src'),
+                        loader: 'istanbul-instrumenter-loader',
+                        exclude: [
+                            /\.(e2e|spec)\.ts$/,
+                            /node_modules/
+                        ]
+                    }
                 ]
+                // preLoaders: [
+                //     // instrument only testing sources with Istanbul
+                //     {
+                //         test: /\.js$/,
+                //         include: path.resolve('src/components/'),
+                //         loader: 'istanbul-instrumenter'
+                //     }
+                // ]
+                // postLoaders: [
+                //     {
+                //         test: /\.js$/,
+                //         exclude: /(node_modules|resources\/js\/vendor)/,
+                //         loader: 'istanbul-instrumenter'
+                //     }
+                // ]
             },
             stats: {
                 colors: true,
                 reasons: true
             },
-            debug: false,
+            debug: true,
             devtool: 'inline-source-map'
+        },
+
+        coverageReporter: {
+            type: 'html'
         }
     });
 };
