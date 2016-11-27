@@ -52,7 +52,7 @@ module.exports = function (config) {
         // if true, it capture browsers, run tests and exit
         singleRun: false,
 
-        reporters: ['progress', 'coverage'],
+        reporters: ['progress', 'coverage', 'dots'],
 
         webpack: {
             resolve: {
@@ -99,7 +99,16 @@ module.exports = function (config) {
         },
 
         coverageReporter: {
-            type: 'html'
+            // specify a common output directory 
+            dir: './coverage',
+            reporters: [
+                { type: 'html', subdir: 'report-html' },
+                // generates ./coverage/lcov.info
+                //{type:'lcovonly', subdir: '.'},
+                // generates ./coverage/coverage-final.json
+                //{type:'json', subdir: '.'},
+
+            ]
         }
     });
 };

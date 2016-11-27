@@ -3,6 +3,12 @@ A typescript library that allows you to authenticate against Azure Active Direct
 
 aka adal.js typescript rewrite
 
+## technical features:
+ 1. 100% typescript
+ 2. 80% code coverage
+ 3. easy to install, no depedencies.
+
+
 ## Installation
 ```
 npm install adal-ts --save
@@ -41,3 +47,25 @@ let context = Authentication.getContext(config);
 let user = context.logout();
 
 ```
+
+
+## Issue Reporting
+
+If you have found a bug or if you have a feature request, please report them at this repository issues section. Please do not report security vulnerabilities on the public GitHub issue tracker. The [Responsible Disclosure Program](https://auth0.com/whitehat) details the procedure for disclosing security issues.
+
+## Contributing
+
+Pull requests are welcome!
+
+## Development
+
+Use `npm run dev` to compile and watch for changes.
+
+## Code coverage
+
+Use `npm test` to compile and run all tests. After the tests have run a /coverage folder is generated. Drill down to index.html to see the results.
+
+## Unit testing
+
+Use `npm test` to compile and run all tests. Test runner is configured with autowatching and 'progress' as test reporter. 
+  

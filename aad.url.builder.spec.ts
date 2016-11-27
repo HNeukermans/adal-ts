@@ -25,6 +25,7 @@ describe('AadUrlBuilder', () => {
         //act
         let actualUrl = new AadUrlBuilder(new GuidGenerator()).with(<AadUrlConfig>this.options).build();
 
+
         //assert
         expect(_.startsWith(actualUrl, expectedLocation)).toBe(true, 'incorrect location');
         actualUrl = actualUrl.replace(expectedLocation, '');

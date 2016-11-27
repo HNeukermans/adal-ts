@@ -9,6 +9,8 @@ Thumbs.db
 
 .npmignore
 
+coverage/
+
 !dist
 
 scenario

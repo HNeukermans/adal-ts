@@ -8,7 +8,9 @@
   "scripts": {
     "dev": "tsc --watch",
     "test": "karma start",
-    "build": "tsc"
+    "build": "tsc",
+    "coverage": "istanbul cover ./node_modules/jasmine/bin/jasmine.js --report lcovonly -- -R spec",
+    "report-coverage": "codecov --token=8f84e61b-7cf4-489b-b9bd-a7287e69397e"
   },
   "repository": {
     "type": "git",
@@ -36,6 +38,7 @@
     "core-js": "^2.3.0",
     "es6-shim": "^0.35.0",
     "istanbul-instrumenter-loader": "^1.0.0",
+    "jasmine": "^2.5.2",
     "jasmine-core": "^2.4.1",
     "karma": "^1.3.0",
     "karma-chrome-launcher": "^2.0.0",
