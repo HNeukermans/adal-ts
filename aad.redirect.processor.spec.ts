@@ -1,9 +1,9 @@
 import { QueryStringDeserializer } from './query.string.deserializer';
 import { UserDecoder } from './user.decoder';
 import { LocalStorage } from './local.storage';
-import { Constants } from "./constants";
-import { AadProductionTokenSample, AadProductionRedirectHash, AadProductionUserProfileSample } from "./scenario/a.production.aad.response";
-import { AadRedirectProcessor } from "./aad.redirect.processor";
+import { Constants } from './constants';
+import { AadProductionTokenSample, AadProductionRedirectHash, AadProductionUserProfileSample } from './scenario/a.production.aad.response';
+import { AadRedirectProcessor } from './aad.redirect.processor';
 
 describe('AadRedirectProcessor', () => {
     'use strict';
