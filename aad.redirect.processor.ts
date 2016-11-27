@@ -2,7 +2,7 @@ import { QueryStringDeserializer, hasAadProps } from './query.string.deserialize
 import { Constants } from './constants';
 import { AadRedirectUrl } from './aad.redirect.url';
 import { UserDecoder } from './user.decoder';
-import { Storage } from './Storage';
+import { Storage } from './storage';
 export class AadRedirectProcessor {
 
     constructor(private queryStringDeserializer: QueryStringDeserializer, private userDecoder: UserDecoder, private storage: Storage, private window: Window) {
