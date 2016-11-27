@@ -1,3 +1,6 @@
+[![npm version](https://badge.fury.io/js/adal-ts.svg)](https://badge.fury.io/js/adal-ts)
+![npm license](https://img.shields.io/npm/l/express.svg)
+
 # adal-ts
 A typescript library that allows you to authenticate against Azure Active Directory
 
@@ -6,7 +9,7 @@ aka adal.js typescript rewrite
 ## technical features:
  1. 100% typescript
  2. 80% code coverage
- 3. easy to install, no depedencies.
+ 3. easy to install, no dependencies.
 
 
 ## Installation
@@ -51,21 +54,23 @@ let user = context.logout();
 
 ## Issue Reporting
 
-If you have found a bug or if you have a feature request, please report them at this repository issues section. Please do not report security vulnerabilities on the public GitHub issue tracker. The [Responsible Disclosure Program](https://auth0.com/whitehat) details the procedure for disclosing security issues.
+If you have found a bug or if you have a feature request, please report them at this repository issues section. 
 
 ## Contributing
 
 Pull requests are welcome!
 
-## Development
+## Building
 
-Use `npm run dev` to compile and watch for changes.
+Use `webpack` cmd to compile and build. A /dist folder is generated.
 
 ## Code coverage
 
-Use `npm test` to compile and run all tests. After the tests have run a /coverage folder is generated. Drill down to index.html to see the results.
+Use `npm test` cmd to compile and run all tests. After the tests have run a /coverage folder is generated. Drill down to index.html to see the results.
+![code_coverage_report](https://cloud.githubusercontent.com/assets/2285199/20648817/5019e648-b4b1-11e6-8484-2887204ea783.png)
 
 ## Unit testing
 
-Use `npm test` to compile and run all tests. Test runner is configured with autowatching and 'progress' as test reporter. 
+Use `npm test` cmd to compile and run all tests. Test runner is configured with autowatching and 'progress' as test reporter. 
+
   
