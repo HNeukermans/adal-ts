@@ -1,3 +1,5 @@
+[![npm version](https://badge.fury.io/js/adal-ts.svg)](https://badge.fury.io/js/adal-ts)
+
 # adal-ts
 A typescript library that allows you to authenticate against Azure Active Directory
 
