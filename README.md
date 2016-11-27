@@ -64,8 +64,10 @@ Use `webpack` cmd to compile and build. A /dist folder is generated.
 ## Code coverage
 
 Use `npm test` cmd to compile and run all tests. After the tests have run a /coverage folder is generated. Drill down to index.html to see the results.
+![code_coverage_report](https://cloud.githubusercontent.com/assets/2285199/20648817/5019e648-b4b1-11e6-8484-2887204ea783.png)
 
 ## Unit testing
 
 Use `npm test` cmd to compile and run all tests. Test runner is configured with autowatching and 'progress' as test reporter. 
+
   
