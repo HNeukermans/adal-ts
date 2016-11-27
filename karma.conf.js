@@ -39,18 +39,18 @@ module.exports = function (config) {
         logLevel: config.LOG_INFO,
 
         // enable / disable watching file and executing tests whenever any file changes
-        autoWatch: false,// (process.env.IS_TRAVIS == null) ? true : false,
+        autoWatch: (process.env.IS_TRAVIS == null) ? true : false,
 
         browsers: [
             //"Firefox",
-            //"Chrome",
+            "Chrome",
             //"IE",
-            "PhantomJS"
+            //"PhantomJS"
         ],
 
         // Continuous Integration mode
         // if true, it capture browsers, run tests and exit
-        singleRun: false,
+        singleRun: (process.env.IS_TRAVIS == null) ? false : true,
 
         reporters: ['progress', 'coverage', 'dots'],
 
