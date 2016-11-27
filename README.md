@@ -51,21 +51,21 @@ let user = context.logout();
 
 ## Issue Reporting
 
-If you have found a bug or if you have a feature request, please report them at this repository issues section. Please do not report security vulnerabilities on the public GitHub issue tracker. The [Responsible Disclosure Program](https://auth0.com/whitehat) details the procedure for disclosing security issues.
+If you have found a bug or if you have a feature request, please report them at this repository issues section. 
 
 ## Contributing
 
 Pull requests are welcome!
 
-## Development
+## Building
 
-Use `npm run dev` to compile and watch for changes.
+Use `webpack` cmd to compile and build. A /dist folder is generated.
 
 ## Code coverage
 
-Use `npm test` to compile and run all tests. After the tests have run a /coverage folder is generated. Drill down to index.html to see the results.
+Use `npm test` cmd to compile and run all tests. After the tests have run a /coverage folder is generated. Drill down to index.html to see the results.
 
 ## Unit testing
 
-Use `npm test` to compile and run all tests. Test runner is configured with autowatching and 'progress' as test reporter. 
+Use `npm test` cmd to compile and run all tests. Test runner is configured with autowatching and 'progress' as test reporter. 
   
