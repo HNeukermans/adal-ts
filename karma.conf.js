@@ -104,7 +104,7 @@ module.exports = function (config) {
             reporters: [
                 { type: 'html', subdir: 'report-html' },
                 // generates ./coverage/lcov.info
-                //{type:'lcovonly', subdir: '.'},
+                {type:'lcovonly', subdir: '.'}
                 // generates ./coverage/coverage-final.json
                 //{type:'json', subdir: '.'},
 

@@ -38,4 +38,5 @@ cache:
 sudo: required
 
 after_success:
-  - coveralls
+  - npm run report-coverage
+  #- npm run semantic-release
