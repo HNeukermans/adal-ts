@@ -38,3 +38,9 @@ export const Constants = {
         3: 'VERBOSE:'
     }
 }
+
+export const RequestTypes = {
+    LOGIN: 'LOGIN',
+    RENEW_TOKEN: 'RENEW_TOKEN',
+    UNKNOWN: 'UNKNOWN'
+}
