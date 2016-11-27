@@ -10,6 +10,7 @@ import { AadRedirectProcessor } from './aad.redirect.processor';
 import { QueryStringDeserializer, hasAadProps } from './query.string.deserializer';
 import { AadLogoutUrlBuilder } from './aad.logout.url.builder';
 
+
 export class Authentication {
 
     constructor() {
