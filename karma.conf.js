@@ -43,9 +43,9 @@ module.exports = function (config) {
 
         browsers: [
             //"Firefox",
-            "Chrome",
+            //"Chrome",
             //"IE",
-            //"PhantomJS"
+            "PhantomJS"
         ],
 
         // Continuous Integration mode
