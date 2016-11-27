@@ -32,3 +32,6 @@ cache:
   directories:
   - $HOME/.yarn-cache
 sudo: required
+
+after_success:
+  - coveralls
