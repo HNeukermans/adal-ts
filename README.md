@@ -6,7 +6,7 @@ aka adal.js typescript rewrite
 ## technical features:
  1. 100% typescript
  2. 80% code coverage
- 3. easy to install, no depedencies.
+ 3. easy to install, no dependencies.
 
 
 ## Installation
