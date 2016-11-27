@@ -30,8 +30,8 @@ before_script:
   - sleep 5
 script:
   - npm test
-  - npm run e2e
-  - npm run build:docker
+  #- npm run e2e
+  #- npm run build:docker
 cache:
   directories:
   - $HOME/.yarn-cache
