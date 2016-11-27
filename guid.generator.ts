@@ -1,5 +1,6 @@
 export class GuidGenerator {
 
+
     public generate(): string {
         let guidHolder = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx';
         let hex = '0123456789abcdef';
