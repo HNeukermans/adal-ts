@@ -1,7 +1,9 @@
 [![npm version](https://badge.fury.io/js/adal-ts.svg)](https://badge.fury.io/js/adal-ts)
 ![npm license](https://img.shields.io/npm/l/express.svg)
-[![Coverage Status](https://coveralls.io/repos/github/HNeukermans/adal-ts/badge.svg?branch=master)](https://coveralls.io/github/HNeukermans/adal-ts?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/HNeukermans/adal-ts/badge.svg)](https://coveralls.io/github/HNeukermans/adal-ts)
 [![Build Status](https://travis-ci.org/HNeukermans/adal-ts.svg?branch=master)](https://travis-ci.org/HNeukermans/adal-ts)
+![live demo](https://img.shields.io/badge/demo-live-orange.svg)
+
 # adal-ts
 A typescript library that allows you to authenticate against Azure Active Directory
 
@@ -17,7 +19,6 @@ aka adal.js typescript rewrite
 ```
 npm install adal-ts --save
 ```
-
 
 ## adal-ts does three things:
  1. login to Azure Active Directory
@@ -51,7 +52,11 @@ let context = Authentication.getContext(config);
 let user = context.logout();
 
 ```
+## [Adal-ts live demo](http://adal-ts-demo.azurewebsites.net/#/)
 
+login with:  
+    user: guestone@hneu70532.onmicrosoft.com <br>
+    pwd: Test1234
 
 ## Issue Reporting
 
