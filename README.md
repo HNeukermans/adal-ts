@@ -18,14 +18,6 @@ aka adal.js typescript rewrite
 npm install adal-ts --save
 ```
 
-## Live demo
-
-[adal-ts live demo](http://adal-ts-demo.azurewebsites.net/#/)
-
-login with:  
-   user: guestone@hneu70532.onmicrosoft.com 
-   pwd: Test1234
-
 ## adal-ts does three things:
  1. login to Azure Active Directory
  2. get the logged in user
@@ -58,7 +50,11 @@ let context = Authentication.getContext(config);
 let user = context.logout();
 
 ```
+## [Adal-ts live demo](http://adal-ts-demo.azurewebsites.net/#/)
 
+login with:  
+    user: guestone@hneu70532.onmicrosoft.com <br>
+    pwd: Test1234
 
 ## Issue Reporting
 
