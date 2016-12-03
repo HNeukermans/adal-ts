@@ -17,7 +17,7 @@ before_install:
   #- sudo apt-get install -y -qq yarn
   #- sleep 3
   # Updating NPM to relevant version >= 3 on Node.JS LTS
-  - npm i -g npm@^3
+  - npm i -g npm@^3 
 # install:
 #   - npm install
 before_script:
