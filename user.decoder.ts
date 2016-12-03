@@ -31,16 +31,12 @@ export class UserDecoder {
     }
 
     private decodeJwt = function (jwtToken: string) {
-        if (this.isEmpty(jwtToken)) {
-            return null;
-        };
-
+        
         var idTokenPartsRegex = /^([^\.\s]*)\.([^\.\s]+)\.([^\.\s]*)$/;
 
         var matches = idTokenPartsRegex.exec(jwtToken);
         if (!matches || matches.length < 4) {
-            this.warn('The returned id_token is not parseable.');
-            return null;
+            throw new Error(`Failed to decode Jwt token. The token has in valid format. Actual token: '${jwtToken}'`);
         }
 
         var crackedToken = {

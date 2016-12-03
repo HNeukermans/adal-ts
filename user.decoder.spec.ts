@@ -17,4 +17,12 @@ describe('UserDecoder', () => {
         expect(instance).toEqual(jasmine.objectContaining(AadProductionUserProfileSample));
     });
 
+     it('decode undefined should throw error', () => {
+
+        let action = () => this.sut.decode(undefined);
+
+        expect(action).toThrow();
+    });
+
+
 });

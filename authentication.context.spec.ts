@@ -92,6 +92,39 @@ describe('AuthenticationContext', () => {
 
     });
 
+    it('getUser should return null if idtoken is undefined', () => {
+
+        spyOn(this.localStorage, 'getItem').and.callFake(function () {
+            return <any>undefined;
+        });
+        let user = this.sut.getUser();
+
+        expect(user).toBe(null);
+
+    });
+
+     it('getUser should return null if idtoken is null', () => {
+
+        spyOn(this.localStorage, 'getItem').and.callFake(function () {
+            return <any>null;
+        });
+        let user = this.sut.getUser();
+
+        expect(user).toBe(null);
+
+    });
+
+     it('getUser should return null if idtoken is null', () => {
+
+        spyOn(this.localStorage, 'getItem').and.callFake(function () {
+            return '    ';
+        });
+        let user = this.sut.getUser();
+
+        expect(user).toBe(null);
+
+    });
+
     it('logout should clear state ', () => {
 
         spyOn(this.localStorage, 'setItem');

@@ -61,9 +61,14 @@ export class AuthenticationContext {
 
     public getUser(): any {
         let idtoken = this.storage.getItem(Constants.STORAGE.IDTOKEN);
-        if (idtoken === '') return null;
-        let user = this.userDecoder.decode(idtoken);
-        return user;
+        
+        try {
+            let user = this.userDecoder.decode(idtoken);
+            return user;
+        } catch (error) {
+            if(console && console.debug) console.debug('getUser() returns null on catched error. Details >> '+ error.toString())
+            return null;
+        }
     }
 
     public logout(): void {
