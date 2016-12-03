@@ -58,6 +58,8 @@ login with:
     user: guestone@hneu70532.onmicrosoft.com <br>
     pwd: Test1234
 
+source: [adal-ts-consumer](https://github.com/HNeukermans/adal-ts-consumer)
+
 ## Issue Reporting
 
 If you have found a bug or if you have a feature request, please report them at this repository issues section. 
