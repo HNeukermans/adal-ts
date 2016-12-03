@@ -2,6 +2,8 @@
 ![npm license](https://img.shields.io/npm/l/express.svg)
 [![Coverage Status](https://coveralls.io/repos/github/HNeukermans/adal-ts/badge.svg)](https://coveralls.io/github/HNeukermans/adal-ts)
 [![Build Status](https://travis-ci.org/HNeukermans/adal-ts.svg?branch=master)](https://travis-ci.org/HNeukermans/adal-ts)
+![live demo](https://img.shields.io/badge/demo-live-orange.svg)
+
 # adal-ts
 A typescript library that allows you to authenticate against Azure Active Directory
 
