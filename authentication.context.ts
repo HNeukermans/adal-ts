@@ -71,6 +71,10 @@ export class AuthenticationContext {
         }
     }
 
+    public getToken(): string {
+        return this.storage.getItem(Constants.STORAGE.IDTOKEN);
+    }
+
     public logout(): void {
         let idtoken = this.storage.getItem(Constants.STORAGE.IDTOKEN);
         if (idtoken === '') return null;
