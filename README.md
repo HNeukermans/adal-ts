@@ -20,11 +20,12 @@ aka adal.js typescript rewrite
 npm install adal-ts --save
 ```
 
-## adal-ts does three things:
+## adal-ts does 4 things:
  1. login to Azure Active Directory
  2. get the logged in user
  3. logout to Azure Active Directory
-
+ 4. allow to retrieve the token from storage (ex: apply it to header)
+ 
 ## Example Usage
 
 ### login
@@ -52,6 +53,14 @@ let context = Authentication.getContext(config);
 let user = context.logout();
 
 ```
+
+### getToken
+```
+let config = new AdalConfig('clientID', 'unittest.onmicrosoft.com', 'http://localhost');
+let context = Authentication.getContext(config);
+let token = context.getToken();
+```
+
 ## [Adal-ts live demo](http://adal-ts-demo.azurewebsites.net/#/)
 
 login with:  
