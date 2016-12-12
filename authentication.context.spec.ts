@@ -150,4 +150,14 @@ describe('AuthenticationContext', () => {
         expect(this.navigator.navigate).toHaveBeenCalledWith('http://microsoft.com');
     });
 
+    it('getToken should call localStorage once', () => {
+        spyOn(this.localStorage, 'getItem');
+        this.sut.getToken();
+        expect(this.localStorage.getItem).toHaveBeenCalledWith(Constants.STORAGE.IDTOKEN);
+        expect(this.localStorage.getItem).toHaveBeenCalledTimes(1);
+    })
+        
+    
+    
+
 });
