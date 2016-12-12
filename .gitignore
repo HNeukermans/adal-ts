@@ -1,5 +1,5 @@
 node_modules
-npm-debug.log
+
 typings
 
 coverage/
@@ -13,3 +13,5 @@ Thumbs.db
 *.d.ts
 .idea/
 *.iml
+
+npm-debug*
