@@ -6,6 +6,7 @@ import { AadUrlBuilder } from './aad.url.builder';
 import { UserDecoder } from './user.decoder';
 import { AdalConfig } from './adal.config';
 import { AadLogoutUrlBuilder } from './aad.logout.url.builder';
+import { User } from './user';
 
 export class AuthenticationContext {
 
@@ -59,7 +60,7 @@ export class AuthenticationContext {
         this.loginInProgress = true;
     }
 
-    public getUser(): any {
+    public getUser(): User {
         let idtoken = this.storage.getItem(Constants.STORAGE.IDTOKEN);
         
         try {
