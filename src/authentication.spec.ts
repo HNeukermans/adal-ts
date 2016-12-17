@@ -1,4 +1,4 @@
-/// <reference path="./node_modules/@types/jasmine/index.d.ts" />
+/// <reference path="./../node_modules/@types/jasmine/index.d.ts" />
 import { AuthenticationContext } from './authentication.context';
 import { Authentication } from './authentication';
 import { LocalStorage } from './local.storage';

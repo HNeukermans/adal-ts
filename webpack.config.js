@@ -1,6 +1,6 @@
 
 module.exports = {
-    entry: "./authentication.ts",
+    entry: "./src/authentication.ts",
     output: {
         path: __dirname,
         filename: "dist/index.js",
