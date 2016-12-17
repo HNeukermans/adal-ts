@@ -1,4 +1,4 @@
-/// <reference path="./node_modules/@types/jasmine/index.d.ts" />
+/// <reference path="./../node_modules/@types/jasmine/index.d.ts" />
 import { AuthenticationContext } from "./authentication.context";
 import { QueryStringDeserializer } from './query.string.deserializer';
 import { Constants } from "./constants";
