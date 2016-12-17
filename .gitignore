@@ -8,6 +8,7 @@ Thumbs.db
 .DS_Store
 
 *.js
+!webpack.config.js
 !karma.conf.js
 *.map
 *.d.ts
@@ -15,3 +16,5 @@ Thumbs.db
 *.iml
 
 npm-debug*
+
+settings.json

@@ -103,7 +103,7 @@ describe('AuthenticationContext', () => {
 
     });
 
-     it('getUser should return null if idtoken is null', () => {
+    it('getUser should return null if idtoken is null', () => {
 
         spyOn(this.localStorage, 'getItem').and.callFake(function () {
             return <any>null;
@@ -114,7 +114,7 @@ describe('AuthenticationContext', () => {
 
     });
 
-     it('getUser should return null if idtoken is null', () => {
+    it('getUser should return null if idtoken is null', () => {
 
         spyOn(this.localStorage, 'getItem').and.callFake(function () {
             return '    ';
@@ -152,12 +152,14 @@ describe('AuthenticationContext', () => {
 
     it('getToken should call localStorage once', () => {
         spyOn(this.localStorage, 'getItem');
+        spyOn(this.navigator, 'navigate');
+
         this.sut.getToken();
         expect(this.localStorage.getItem).toHaveBeenCalledWith(Constants.STORAGE.IDTOKEN);
         expect(this.localStorage.getItem).toHaveBeenCalledTimes(1);
     })
-        
-    
-    
+
+
+
 
 });
