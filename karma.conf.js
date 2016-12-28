@@ -7,14 +7,14 @@ module.exports = function (config) {
         // list of files / patterns to load in the browser
         files: [
             //{ pattern: 'dist/*.js', included: true },
-            { pattern: '*.spec.ts', watched: true }
+            { pattern: './karma.specs.js', watched: true }
         ],
 
         // list of files / patterns to exclude
         exclude: [],
 
         preprocessors: {
-            '*.spec.ts': ['webpack', 'sourcemap'],
+            './karma.specs.js': ['webpack', 'sourcemap'],
             //'*.ts': ['webpack', 'sourcemap', 'coverage'],
             //'**/!(*.spec)+(.js)': ['coverage']
             //'**/*.js': ['coverage']
