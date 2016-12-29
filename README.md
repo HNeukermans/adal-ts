@@ -50,7 +50,7 @@ let user = context.getUser();
 ```
 let config = new AdalConfig('clientID', 'unittest.onmicrosoft.com', 'http://localhost');
 let context = Authentication.getContext(config);
-let user = context.logout();
+context.logout();
 
 ```
 
@@ -79,7 +79,11 @@ Pull requests are welcome!
 
 ## Building
 
-Use `webpack` cmd to compile and build. A /dist folder is generated.
+Use `webpack` to compile and build. A `/dist` folder is generated.
+
+```
+npm run webpack
+```
 
 ## Code coverage
 
