@@ -50,7 +50,7 @@ let user = context.getUser();
 ```
 let config = new AdalConfig('clientID', 'unittest.onmicrosoft.com', 'http://localhost');
 let context = Authentication.getContext(config);
-let user = context.logout();
+context.logout();
 
 ```
 
