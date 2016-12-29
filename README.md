@@ -79,7 +79,11 @@ Pull requests are welcome!
 
 ## Building
 
-Use `webpack` cmd to compile and build. A /dist folder is generated.
+Use `webpack` to compile and build. A `/dist` folder is generated.
+
+```
+npm run webpack
+```
 
 ## Code coverage
 
