@@ -16,11 +16,11 @@ module.exports = {
          *
          * See: http://webpack.github.io/docs/configuration.html#resolve-extensions
          */
-        extensions: ['', '.ts', '.js', '.json'],
+        extensions: ['.ts', '.js', '.json'],
 
     },
     module: {
-        loaders: [
+        rules: [
             {
                 test: /\.ts$/,
                 loader: 'ts-loader'
