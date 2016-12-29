@@ -25,7 +25,7 @@ before_script:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
   - sleep 3
-  - npm start &
+  - npm run build &
   - sleep 5
 script:
   - npm test
