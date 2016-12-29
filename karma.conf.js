@@ -1,13 +1,15 @@
 module.exports = function (config) {
     'use strict';
 
+    var testWebpackConfig = require('./webpack.test.config.js')();
+
     config.set({
         basePath: './',
         frameworks: ["jasmine"],
         // list of files / patterns to load in the browser
         files: [
             //{ pattern: 'dist/*.js', included: true },
-            { pattern: './karma.specs.js', watched: true }
+            { pattern: './karma.specs.js', watched: true },
         ],
 
         // list of files / patterns to exclude
@@ -54,49 +56,8 @@ module.exports = function (config) {
 
         reporters: ['progress', 'coverage', 'dots'],
 
-        webpack: {
-            resolve: {
-                extensions: ['', '.ts', '.js']
-            },
-            module: {
-                loaders: [
-                    { test: /\.ts$/, loader: 'awesome-typescript-loader' }
-                ],
-                postLoaders: [
-                    // instrument only testing sources with Istanbul
-                    {
-                        test: /\.(js|ts)$/,
-                        //include: helpers.root('src'),
-                        loader: 'istanbul-instrumenter-loader',
-                        exclude: [
-                            /\.(e2e|spec)\.ts$/,
-                            /node_modules/
-                        ]
-                    }
-                ]
-                // preLoaders: [
-                //     // instrument only testing sources with Istanbul
-                //     {
-                //         test: /\.js$/,
-                //         include: path.resolve('src/components/'),
-                //         loader: 'istanbul-instrumenter'
-                //     }
-                // ]
-                // postLoaders: [
-                //     {
-                //         test: /\.js$/,
-                //         exclude: /(node_modules|resources\/js\/vendor)/,
-                //         loader: 'istanbul-instrumenter'
-                //     }
-                // ]
-            },
-            stats: {
-                colors: true,
-                reasons: true
-            },
-            debug: true,
-            devtool: 'inline-source-map'
-        },
+        // Webpack Config at ./webpack.test.config.js
+        webpack: testWebpackConfig,
 
         coverageReporter: {
             // specify a common output directory 
