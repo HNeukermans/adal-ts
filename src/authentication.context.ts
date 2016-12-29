@@ -37,7 +37,7 @@ export class AuthenticationContext {
 
     public login(): void {
         if (this.loginInProgress) {
-            this.info("Login in progress");
+            this.info('Login in progress');
             return;
         }
 
@@ -62,12 +62,11 @@ export class AuthenticationContext {
 
     public getUser(): User {
         let idtoken = this.storage.getItem(Constants.STORAGE.IDTOKEN);
-        
         try {
             let user = this.userDecoder.decode(idtoken);
             return user;
         } catch (error) {
-            if(console && console.debug) console.debug('getUser() returns null on catched error. Details >> '+ error.toString())
+            if (console && console.debug) console.debug('getUser() returns null on catched error. Details >> ' + error.toString());
             return null;
         }
     }
@@ -104,7 +103,7 @@ export class AuthenticationContext {
             nonce: this.idTokenNonce,
             tenant: this.config.tenant,
             clientId: this.config.clientId
-        }
+        };
     }
 
     private cloneConfig(obj: any) {

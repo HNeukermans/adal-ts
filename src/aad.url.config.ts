@@ -1,4 +1,4 @@
-//all optional properties have generated defaults
+// all optional properties have generated defaults
 export interface AadUrlConfig {
     nonce: string;
     tenant: string;

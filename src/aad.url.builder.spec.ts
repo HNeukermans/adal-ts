@@ -1,7 +1,7 @@
 import { AadUrlBuilder } from './aad.url.builder';
-import { GuidGenerator } from "./guid.generator";
-import { AadUrlConfig } from "./aad.url.config";
-import * as _ from "lodash";
+import { GuidGenerator } from './guid.generator';
+import { AadUrlConfig } from './aad.url.config';
+import * as _ from 'lodash';
 
 describe('AadUrlBuilder', () => {
     'use strict';
@@ -12,7 +12,7 @@ describe('AadUrlBuilder', () => {
 
     it('build should create aad url', () => {
 
-        //arrange
+        // arrange
         let expectedLocation = 'https://login.microsoftonline.com/' + this.options.tenant + '/oauth2/authorize';
         let expectedResponseType = '?response_type=' + this.options.responseType;
         let expectedClientId = '&client_id=' + this.options.clientId;
@@ -22,11 +22,11 @@ describe('AadUrlBuilder', () => {
         let expectedLibVersion = '&x-client-SKU=Js&x-client-Ver=' + this.options.libVersion;
         let expectedNonce = '&nonce=' + this.options.nonce;
 
-        //act
+        // act
         let actualUrl = new AadUrlBuilder(new GuidGenerator()).with(<AadUrlConfig>this.options).build();
 
 
-        //assert
+        // assert
         expect(_.startsWith(actualUrl, expectedLocation)).toBe(true, 'incorrect location');
         actualUrl = actualUrl.replace(expectedLocation, '');
 
@@ -62,6 +62,6 @@ describe('AadUrlBuilder', () => {
             state: new GuidGenerator().generate(),
             clientRequestId: new GuidGenerator().generate(),
             libVersion: '1.0.0'
-        }
+        };
     }
 });

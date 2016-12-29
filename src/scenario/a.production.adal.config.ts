@@ -1,4 +1,4 @@
-import { AdalConfig } from "../adal.config";
+import { AdalConfig } from '../adal.config';
 
 export const ATenantConfig = new AdalConfig('61bdbb45-4004-48e3-4444-e4f1740661c8', 'unittest.onmicrosoft.com', 'http://localhost/login', 'http://localhost/logout');
 

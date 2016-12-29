@@ -1,15 +1,15 @@
 /// <reference path="./../node_modules/@types/jasmine/index.d.ts" />
-import { AuthenticationContext } from "./authentication.context";
+import { AuthenticationContext } from './authentication.context';
 import { LocalStorage } from './local.storage';
 import { Navigator } from './navigator';
-import { AadUrlBuilder } from "./aad.url.builder";
-import { AadLogoutUrlBuilder } from "./aad.logout.url.builder";
-import { GuidGenerator } from "./guid.generator";
+import { AadUrlBuilder } from './aad.url.builder';
+import { AadLogoutUrlBuilder } from './aad.logout.url.builder';
+import { GuidGenerator } from './guid.generator';
 import { UserDecoder } from './user.decoder';
-import { Constants } from "./constants";
-import { ATenantConfig, ATenantUrl } from "./scenario/a.production.adal.config";
-import { AadProductionTokenSample, AadProductionUserProfileSample } from "./scenario/a.production.aad.response";
-import * as _ from "lodash";
+import { Constants } from './constants';
+import { ATenantConfig, ATenantUrl } from './scenario/a.production.adal.config';
+import { AadProductionTokenSample, AadProductionUserProfileSample } from './scenario/a.production.aad.response';
+import * as _ from 'lodash';
 
 describe('AuthenticationContext', () => {
     'use strict';
@@ -49,7 +49,7 @@ describe('AuthenticationContext', () => {
         this.sut.login();
 
         expect(this.navigator.navigate).toHaveBeenCalled();
-        //expect(this.navigator.navigate).toHaveBeenCalledWith(ATenantUrl); //should create a  specific matcher gfor this   
+        // expect(this.navigator.navigate).toHaveBeenCalledWith(ATenantUrl); //should create a  specific matcher gfor this
     });
 
     it('login should store its state', () => {
@@ -157,9 +157,5 @@ describe('AuthenticationContext', () => {
         this.sut.getToken();
         expect(this.localStorage.getItem).toHaveBeenCalledWith(Constants.STORAGE.IDTOKEN);
         expect(this.localStorage.getItem).toHaveBeenCalledTimes(1);
-    })
-
-
-
-
+    });
 });
