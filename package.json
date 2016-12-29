@@ -9,11 +9,15 @@
     "dev": "tsc --watch",
     "test": "karma start",
     "build": "tsc",
+<<<<<<< HEAD
 <<<<<<< 6bd50e6f48a599518516054768253532fa496209
     "webpack": "webpack",
 =======
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
 >>>>>>> add basic tslint.json integration
+=======
+    "lint": "tslint -c tslint.json 'src/**/*.ts'",
+>>>>>>> 12fb905a4788796774f0f1bad9cbb5aba77be384
     "report-coverage": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
   },
   "repository": {
@@ -58,8 +62,6 @@
     "tslint": "4.2.0",
     "typescript": "^2.1.4",
     "webpack": "2.2.0-rc.3"
-    "typescript": "2.0.10",
-    "webpack": "^1.13.0"
   },
   "peerDependencies": {}
 }
