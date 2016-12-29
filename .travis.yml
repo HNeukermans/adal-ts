@@ -9,7 +9,6 @@ env:
 services:
   # - docker
 before_install:
-  - npm install -g typescript@2.0.10
   # Repo for yarn
   # - sudo apt-key adv --keyserver pgp.mit.edu --recv D101F7899D41F3C3
   #- echo "deb http://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
