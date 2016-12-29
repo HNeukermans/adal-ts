@@ -9,6 +9,7 @@ Thumbs.db
 
 *.js
 !webpack.config.js
+!webpack.test.config.js
 !karma.conf.js
 !karma.specs.js
 *.map
