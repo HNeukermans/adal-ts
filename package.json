@@ -9,6 +9,7 @@
     "dev": "tsc --watch",
     "test": "karma start",
     "build": "tsc",
+    "webpack": "webpack",
     "report-coverage": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
   },
   "repository": {
