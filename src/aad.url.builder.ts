@@ -69,7 +69,7 @@ export class AadUrlBuilder {
             str.push(this.extraQueryParameter);
         }
 
-        //var correlationId = this.clientRequestId ? obj.correlationId : new GuidGenerator().generate();
+        // var correlationId = this.clientRequestId ? obj.correlationId : new GuidGenerator().generate();
         str.push('client-request-id=' + encodeURIComponent(this.clientRequestId));
 
         return str.join('&');

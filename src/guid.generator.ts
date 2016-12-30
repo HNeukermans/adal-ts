@@ -5,7 +5,7 @@ export class GuidGenerator {
         let guidHolder = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx';
         let hex = '0123456789abcdef';
         let r = 0;
-        let guidResponse = "";
+        let guidResponse = '';
         for (let i = 0; i < 36; i++) {
             if (guidHolder[i] !== '-' && guidHolder[i] !== '4') {
                 // each x and y needs to be random
@@ -25,8 +25,8 @@ export class GuidGenerator {
         return guidResponse;
     }
 
-    private decimalToHex(number: number): string {
-        var hex = number.toString(16);
+    private decimalToHex(value: number): string {
+        var hex = value.toString(16);
         while (hex.length < 2) {
             hex = '0' + hex;
         }

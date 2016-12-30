@@ -14,7 +14,7 @@ export class UserDecoder {
 
         let user = JSON.parse(decodedPayLoad);
 
-        //if (!user || !user.hasOwnProperty('aud')) throw new Error('');
+        // if (!user || !user.hasOwnProperty('aud')) throw new Error('');
 
         return <User>user;
     }
@@ -23,7 +23,7 @@ export class UserDecoder {
 
         var base64Decoded = this.base64DecodeStringUrlSafe(value);
         if (!base64Decoded) {
-            //this.info('The returned id_token could not be base64 url safe decoded.');
+            // this.info('The returned id_token could not be base64 url safe decoded.');
             throw Error('Failed to base64 decode value. Value has invalid format.');
         }
 
@@ -31,7 +31,6 @@ export class UserDecoder {
     }
 
     private decodeJwt = function (jwtToken: string) {
-        
         var idTokenPartsRegex = /^([^\.\s]*)\.([^\.\s]+)\.([^\.\s]*)$/;
 
         var matches = idTokenPartsRegex.exec(jwtToken);
@@ -70,14 +69,14 @@ export class UserDecoder {
 
         let h1: any, h2: any, h3: any, h4: any, bits: any, c1: any, c2: any, c3: any, decoded = '';
         for (var i = 0; i < length; i += 4) {
-            //Every 4 base64 encoded character will be converted to 3 byte string, which is 24 bits
+            // every 4 base64 encoded character will be converted to 3 byte string, which is 24 bits
             // then 6 bits per base64 encoded character
             h1 = codes.indexOf(base64IdToken.charAt(i));
             h2 = codes.indexOf(base64IdToken.charAt(i + 1));
             h3 = codes.indexOf(base64IdToken.charAt(i + 2));
             h4 = codes.indexOf(base64IdToken.charAt(i + 3));
 
-            // For padding, if last two are '='
+            // for padding, if last two are '='
             if (i + 2 === length - 1) {
                 bits = h1 << 18 | h2 << 12 | h3 << 6;
                 c1 = bits >> 16 & 255;
@@ -87,7 +86,7 @@ export class UserDecoder {
             }
             // if last one is '='
             else if (i + 1 === length - 1) {
-                bits = h1 << 18 | h2 << 12
+                bits = h1 << 18 | h2 << 12;
                 c1 = bits >> 16 & 255;
                 decoded += String.fromCharCode(c1);
                 break;

@@ -28,7 +28,7 @@ export class Authentication {
             new AadUrlBuilder(new GuidGenerator()),
             new UserDecoder(),
             new AadLogoutUrlBuilder());
-        //TODO this.enableNativeLogging();
+        // TODO this.enableNativeLogging();
         return context;
     }
 

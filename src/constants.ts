@@ -37,10 +37,10 @@ export const Constants = {
         2: 'INFO:',
         3: 'VERBOSE:'
     }
-}
+};
 
 export const RequestTypes = {
     LOGIN: 'LOGIN',
     RENEW_TOKEN: 'RENEW_TOKEN',
     UNKNOWN: 'UNKNOWN'
-}
+};

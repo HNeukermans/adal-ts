@@ -1,6 +1,6 @@
 import { UserDecoder } from './user.decoder';
-import { Constants } from "./constants";
-import { AadProductionTokenSample, AadProductionUserProfileSample } from "./scenario/a.production.aad.response";
+import { Constants } from './constants';
+import { AadProductionTokenSample, AadProductionUserProfileSample } from './scenario/a.production.aad.response';
 
 describe('UserDecoder', () => {
     'use strict';
