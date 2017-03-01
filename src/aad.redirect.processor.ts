@@ -13,8 +13,9 @@ export class AadRedirectProcessor {
         let deserializedHash = this.queryStringDeserializer.deserialize(this.window.location.hash);
         let aadRedirect = new AadRedirectUrl(deserializedHash);
         if (aadRedirect.isAadRedirect()) {
-            let userProfile = this.userDecoder.decode(aadRedirect.idToken);
-            this.storage.setItem(Constants.STORAGE.IDTOKEN, aadRedirect.idToken);
+            let userProfile = this.userDecoder.decode(aadRedirect.idToken || aadRedirect.accesToken);
+            this.storage.setItem(Constants.STORAGE.IDTOKEN, aadRedirect.idToken || '');
+            this.storage.setItem(Constants.STORAGE.ACCESSTOKEN, aadRedirect.accesToken || '');
             this.window.location.assign(this.storage.getItem(Constants.STORAGE.LOGIN_REQUEST));
         }
 

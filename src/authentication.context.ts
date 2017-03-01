@@ -61,7 +61,7 @@ export class AuthenticationContext {
     }
 
     public getUser(): User {
-        let idtoken = this.storage.getItem(Constants.STORAGE.IDTOKEN);
+        let idtoken = this.storage.getItem(Constants.STORAGE.IDTOKEN) || this.storage.getItem(Constants.STORAGE.ACCESSTOKEN);
         try {
             let user = this.userDecoder.decode(idtoken);
             return user;
@@ -72,7 +72,7 @@ export class AuthenticationContext {
     }
 
     public getToken(): string {
-        return this.storage.getItem(Constants.STORAGE.IDTOKEN);
+        return this.storage.getItem(Constants.STORAGE.IDTOKEN) || this.storage.getItem(Constants.STORAGE.ACCESSTOKEN);
     }
 
     public logout(): void {
@@ -82,6 +82,7 @@ export class AuthenticationContext {
         this.storage.setItem(this.CONSTANTS.STORAGE.NONCE_IDTOKEN, '');
         this.storage.setItem(this.CONSTANTS.STORAGE.STATE_LOGIN, '');
         this.storage.setItem(this.CONSTANTS.STORAGE.IDTOKEN, '');
+        this.storage.setItem(this.CONSTANTS.STORAGE.ACCESSTOKEN, '');
 
         let url = this.logoutUrlBuilder.with(this.config.tenant, this.config.postLogoutRedirectUrl).build();
 
