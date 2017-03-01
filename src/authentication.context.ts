@@ -76,8 +76,7 @@ export class AuthenticationContext {
     }
 
     public logout(): void {
-        let idtoken = this.storage.getItem(Constants.STORAGE.IDTOKEN);
-        if (idtoken === '') return null;
+        if (this.getToken() === '') return null;
 
         this.storage.setItem(this.CONSTANTS.STORAGE.NONCE_IDTOKEN, '');
         this.storage.setItem(this.CONSTANTS.STORAGE.STATE_LOGIN, '');
