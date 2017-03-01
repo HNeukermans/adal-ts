@@ -14,6 +14,7 @@ export const Constants = {
         SESSION_STATE: 'adal.session.state',
         USERNAME: 'adal.username',
         IDTOKEN: 'adal.idtoken',
+        ACCESSTOKEN: 'adal.accesstoken',
         ERROR: 'adal.error',
         ERROR_DESCRIPTION: 'adal.error.description',
         LOGIN_REQUEST: 'adal.login.request',
