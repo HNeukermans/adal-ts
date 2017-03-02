@@ -1,6 +1,6 @@
 {
   "name": "adal-ts",
-  "version": "0.5.9-alpha1",
+  "version": "0.6.0",
   "description": "adal.js typescript rewrite",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
