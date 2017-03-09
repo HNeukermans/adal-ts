@@ -20,6 +20,9 @@ aka adal.js typescript rewrite
 npm install adal-ts --save
 ```
 
+## Access & ID token support
+v0.6.0 adds support for access tokens for use with implicit auth flow against AAD and Office365
+
 ## adal-ts does 4 things:
  1. login to Azure Active Directory
  2. get the logged in user
