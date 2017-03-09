@@ -21,7 +21,7 @@ npm install adal-ts --save
 ```
 
 ## Access & ID token support
-v0.6.0 adds support for access tokens for use with implicit auth flow against AAD and Office365
+v0.6.0 adds support for access tokens for use with implicit auth flow against AAD and Office365 [link](https://github.com/HNeukermans/adal-ts/pull/26)
 
 ## adal-ts does 4 things:
  1. login to Azure Active Directory
