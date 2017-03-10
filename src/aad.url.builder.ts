@@ -8,6 +8,7 @@ export class AadUrlBuilder {
     private clientId: string;
     private resource: string;
     private redirectUri: string;
+    private scope: string;
     private state: string;
     private slice: string;
     private clientRequestId: string;
@@ -33,6 +34,7 @@ export class AadUrlBuilder {
         this.clientId = options.clientId;
         this.responseType = options.responseType || this.responseType;
         this.redirectUri = options.redirectUri || this.redirectUri;
+        this.scope = options.scope;
         this.state = options.state;
         this.slice = options.slice || this.slice;
         this.clientRequestId = options.clientRequestId || this.clientRequestId;
@@ -43,7 +45,7 @@ export class AadUrlBuilder {
 
     public build() {
 
-        var urlNavigate = AadUrlBuilder.MicrosoftLoginUrl + this.tenant + '/oauth2/authorize';
+        var urlNavigate = AadUrlBuilder.MicrosoftLoginUrl + this.tenant + '/oauth2/v2.0/authorize';
         urlNavigate = urlNavigate + this.serialize() + this.addLibMetadata();
         urlNavigate = urlNavigate + '&nonce=' + encodeURIComponent(this.nonce);
         return urlNavigate;
@@ -59,6 +61,7 @@ export class AadUrlBuilder {
         }
 
         str.push('redirect_uri=' + encodeURIComponent(this.redirectUri));
+        str.push('scope=' + encodeURIComponent(this.scope));
         str.push('state=' + encodeURIComponent(this.state));
 
         if (this.slice) {
