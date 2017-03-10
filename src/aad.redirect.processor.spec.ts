@@ -1,6 +1,6 @@
 import { QueryStringDeserializer } from './query.string.deserializer';
 import { UserDecoder } from './user.decoder';
-import { LocalStorage } from './local.storage';
+import { SessionStorage } from './local.storage';
 import { Constants } from './constants';
 import { AadProductionTokenSample, AadProductionRedirectHash, AadProductionUserProfileSample } from './scenario/a.production.aad.response';
 import { AadRedirectProcessor } from './aad.redirect.processor';
@@ -9,7 +9,7 @@ describe('AadRedirectProcessor', () => {
     'use strict';
 
     beforeEach(() => {
-        this.localStorage = new LocalStorage();
+        this.localStorage = new SessionStorage();
         this.window = <Window>{ location: { hash: '' } };
         this.window.location.assign = function () { };
         this.userDecoder = new UserDecoder();
