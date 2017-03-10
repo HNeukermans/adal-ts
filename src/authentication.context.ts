@@ -60,10 +60,12 @@ export class AuthenticationContext {
         this.loginInProgress = true;
     }
 
-    public getUser(): User {
-        let idtoken = this.storage.getItem(Constants.STORAGE.IDTOKEN) || this.storage.getItem(Constants.STORAGE.ACCESSTOKEN);
+    public getUser(token?: string): User {
+        if (token == null) {
+            token = this.storage.getItem(Constants.STORAGE.IDTOKEN) || this.storage.getItem(Constants.STORAGE.ACCESSTOKEN);
+        }
         try {
-            let user = this.userDecoder.decode(idtoken);
+            let user = this.userDecoder.decode(token);
             return user;
         } catch (error) {
             if (console && console.debug) console.debug('getUser() returns null on catched error. Details >> ' + error.toString());
