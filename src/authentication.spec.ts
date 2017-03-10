@@ -1,7 +1,7 @@
 /// <reference path="./../node_modules/@types/jasmine/index.d.ts" />
 import { AuthenticationContext } from './authentication.context';
 import { Authentication } from './authentication';
-import { LocalStorage } from './local.storage';
+import { SessionStorage } from './local.storage';
 import { AdalConfig } from './adal.config';
 import { Navigator } from './navigator';
 import { AadUrlBuilder } from './aad.url.builder';
