@@ -59,6 +59,7 @@ describe('AadUrlBuilder', () => {
             responseType: 'id_token',
             clientId: new GuidGenerator().generate(),
             redirectUri: 'http://ng2a-hneu-web-ui.azurewebsites.net/',
+            scope: 'openid',
             state: new GuidGenerator().generate(),
             clientRequestId: new GuidGenerator().generate(),
             libVersion: '1.0.0'
