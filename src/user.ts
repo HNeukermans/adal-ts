@@ -12,6 +12,7 @@ export interface User {
     nonce?: string;
     oid?: string;
     platf?: string;
+    profile?: any;
     sub?: string;
     tid?: string;
     unique_name: string;
