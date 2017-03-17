@@ -4,6 +4,8 @@ export const Constants = {
     ID_TOKEN: 'id_token',
     ERROR_DESCRIPTION: 'error_description',
     SESSION_STATE: 'session_state',
+    STATE: 'state',
+    SCOPE: 'scope',
     STORAGE: {
         TOKEN_KEYS: 'adal.token.keys',
         ACCESS_TOKEN_KEY: 'adal.access.token.key',
@@ -19,7 +21,9 @@ export const Constants = {
         ERROR_DESCRIPTION: 'adal.error.description',
         LOGIN_REQUEST: 'adal.login.request',
         LOGIN_ERROR: 'adal.login.error',
-        RENEW_STATUS: 'adal.token.renew.status'
+        RENEW_STATUS: 'adal.token.renew.status',
+        SCOPE: 'adal.scope',
+        POST_LOGIN: 'adal.post.login'
     },
     RESOURCE_DELIMETER: '|',
     LOADFRAME_TIMEOUT: '6000',

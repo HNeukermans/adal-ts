@@ -5,6 +5,7 @@ export interface AadUrlConfig {
     clientId: string;
     responseType?: string;
     redirectUri?: string;
+    scope: string;
     state: string;
     slice?: string;
     clientRequestId?: string;

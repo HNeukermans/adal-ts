@@ -12,7 +12,7 @@ export class AadRedirectUrl {
         return this.object[Constants.EXPIRES_IN];
     }
 
-    get accesToken() {
+    get accessToken() {
         return this.object[Constants.ACCESS_TOKEN];
     }
 
@@ -20,7 +20,15 @@ export class AadRedirectUrl {
         return this.object[Constants.SESSION_STATE];
     }
 
-    public isAadRedirect() {
+    get state() {
+        return this.object[Constants.STATE];
+    }
+
+    get scope() {
+        return this.object[Constants.SCOPE];
+    }
+
+    public isAadRedirect(): boolean {
         return (
             this.object.hasOwnProperty(Constants.ERROR_DESCRIPTION) ||
             this.object.hasOwnProperty(Constants.ACCESS_TOKEN) ||

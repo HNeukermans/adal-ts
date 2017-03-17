@@ -1,5 +1,5 @@
 import { AuthenticationContext } from './authentication.context';
-import { LocalStorage } from './local.storage';
+import { SessionStorage } from './local.storage';
 import { Navigator } from './navigator';
 import { AadUrlBuilder } from './aad.url.builder';
 import { GuidGenerator } from './guid.generator';
@@ -18,11 +18,9 @@ export class Authentication {
 
     public static getContext(configuration: AdalConfig): AuthenticationContext {
 
-        console.log('getContext...');
-
         let context = new AuthenticationContext(
             configuration,
-            new LocalStorage(),
+            new SessionStorage(),
             new Navigator(),
             new GuidGenerator(),
             new AadUrlBuilder(new GuidGenerator()),
@@ -37,7 +35,7 @@ export class Authentication {
         let p = new AadRedirectProcessor(
             new QueryStringDeserializer(),
             new UserDecoder(),
-            new LocalStorage(),
+            new SessionStorage(),
             window);
         return p;
     }

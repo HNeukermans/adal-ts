@@ -1,6 +1,6 @@
 /// <reference path="./../node_modules/@types/jasmine/index.d.ts" />
 import { AuthenticationContext } from './authentication.context';
-import { LocalStorage } from './local.storage';
+import { SessionStorage } from './local.storage';
 import { Navigator } from './navigator';
 import { AadUrlBuilder } from './aad.url.builder';
 import { AadLogoutUrlBuilder } from './aad.logout.url.builder';
@@ -16,7 +16,7 @@ describe('AuthenticationContext', () => {
 
     beforeEach(() => {
         this.config = ATenantConfig;
-        this.localStorage = new LocalStorage();
+        this.localStorage = new SessionStorage();
         this.navigator = new Navigator();
         this.guidGenerator = new GuidGenerator();
         this.aadUrlBuilder = new AadUrlBuilder(this.guidGenerator);
