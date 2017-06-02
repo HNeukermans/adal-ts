@@ -17,9 +17,6 @@ export class Authentication {
     }
 
     public static getContext(configuration: AdalConfig): AuthenticationContext {
-
-        console.log('getContext...');
-
         let context = new AuthenticationContext(
             configuration,
             new LocalStorage(),
