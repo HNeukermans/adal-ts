@@ -54,7 +54,7 @@ describe('AadUrlBuilder', () => {
 
     it('should allow using custom login url', () => {
         let options = createConfig();
-        options.loginUrl = 'https://my.custom.ad/'
+        options.loginUrl = 'https://my.custom.ad/';
         let expectedLocation = options.loginUrl + options.tenant + '/oauth2/authorize';
 
         let actualUrl = new AadUrlBuilder(new GuidGenerator()).with(<AadUrlConfig>options).build();
