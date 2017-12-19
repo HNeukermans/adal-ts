@@ -10,4 +10,5 @@ export interface AadUrlConfig {
     clientRequestId?: string;
     libVersion?: string;
     extraQueryParameter?: string;
+    loginUrl?: string;
 }
