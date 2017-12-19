@@ -13,8 +13,8 @@ export class AadUrlBuilder {
     private clientRequestId: string;
     private libVersion: string;
     private extraQueryParameter: string;
+    private loginUrl: string;
     private guidGenerator: GuidGenerator;
-    public static MicrosoftLoginUrl: string = 'https://login.microsoftonline.com/';
 
     constructor(guidGenerator: GuidGenerator) {
         this.guidGenerator = guidGenerator;
@@ -23,6 +23,7 @@ export class AadUrlBuilder {
         this.clientRequestId = this.guidGenerator.generate();
         this.responseType = 'id_token';
         this.libVersion = '1.0.0';
+        this.loginUrl = 'https://login.microsoftonline.com/';
         this.redirectUri = window.location.href;
     }
 
@@ -38,12 +39,13 @@ export class AadUrlBuilder {
         this.clientRequestId = options.clientRequestId || this.clientRequestId;
         this.libVersion = options.libVersion || this.libVersion;
         this.extraQueryParameter = options.extraQueryParameter || this.extraQueryParameter;
+        this.loginUrl = options.loginUrl || this.loginUrl;
         return this;
     }
 
     public build() {
 
-        var urlNavigate = AadUrlBuilder.MicrosoftLoginUrl + this.tenant + '/oauth2/authorize';
+        var urlNavigate = this.loginUrl + this.tenant + '/oauth2/authorize';
         urlNavigate = urlNavigate + this.serialize() + this.addLibMetadata();
         urlNavigate = urlNavigate + '&nonce=' + encodeURIComponent(this.nonce);
         return urlNavigate;

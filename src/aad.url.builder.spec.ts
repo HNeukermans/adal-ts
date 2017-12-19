@@ -52,6 +52,16 @@ describe('AadUrlBuilder', () => {
         actualUrl = actualUrl.replace(expectedNonce, '');
     });
 
+    it('should allow using custom login url', () => {
+        let options = createConfig();
+        options.loginUrl = 'https://my.custom.ad/';
+        let expectedLocation = options.loginUrl + options.tenant + '/oauth2/authorize';
+
+        let actualUrl = new AadUrlBuilder(new GuidGenerator()).with(<AadUrlConfig>options).build();
+
+        expect(_.startsWith(actualUrl, expectedLocation)).toBe(true, 'incorrect location');
+    });
+
     function createConfig(): AadUrlConfig {
         return {
             nonce: new GuidGenerator().generate(),
