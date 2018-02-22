@@ -1,5 +1,6 @@
 import { GuidGenerator } from './guid.generator';
 import { AadUrlConfig } from './aad.url.config';
+import { EndpointVersion, Constants } from './constants';
 export class AadUrlBuilder {
 
     private nonce: string;
@@ -13,6 +14,7 @@ export class AadUrlBuilder {
     private clientRequestId: string;
     private libVersion: string;
     private extraQueryParameter: string;
+    private endpointVersion: EndpointVersion;
     private guidGenerator: GuidGenerator;
     public static MicrosoftLoginUrl: string = 'https://login.microsoftonline.com/';
 
@@ -23,6 +25,7 @@ export class AadUrlBuilder {
         this.clientRequestId = this.guidGenerator.generate();
         this.responseType = 'id_token';
         this.libVersion = '1.0.0';
+        this.endpointVersion = EndpointVersion.V1;
         this.redirectUri = window.location.href;
     }
 
@@ -38,12 +41,13 @@ export class AadUrlBuilder {
         this.clientRequestId = options.clientRequestId || this.clientRequestId;
         this.libVersion = options.libVersion || this.libVersion;
         this.extraQueryParameter = options.extraQueryParameter || this.extraQueryParameter;
+        this.endpointVersion = options.endpointVersion || this.endpointVersion;
         return this;
     }
 
     public build() {
 
-        var urlNavigate = AadUrlBuilder.MicrosoftLoginUrl + this.tenant + '/oauth2/authorize';
+        var urlNavigate = AadUrlBuilder.MicrosoftLoginUrl + this.tenant + '/oauth2/' + Constants.ENDPOINT_TO_URL_PART_MAP[this.endpointVersion] + 'authorize';
         urlNavigate = urlNavigate + this.serialize() + this.addLibMetadata();
         urlNavigate = urlNavigate + '&nonce=' + encodeURIComponent(this.nonce);
         return urlNavigate;

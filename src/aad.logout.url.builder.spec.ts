@@ -1,6 +1,7 @@
 import { AadLogoutUrlBuilder } from './aad.logout.url.builder';
 import { AadUrlConfig } from './aad.url.config';
 import * as _ from 'lodash';
+import { EndpointVersion } from './constants';
 
 describe('AadLogoutUrlBuilder', () => {
     'use strict';
@@ -25,6 +26,21 @@ describe('AadLogoutUrlBuilder', () => {
 
         expect(_.startsWith(actualUrl, expectedRedirectUrl)).toBe(true, 'incorrect redirect url');
         actualUrl = actualUrl.replace(expectedRedirectUrl, '');
+    });
+
+    it('build should create v2 aad url', () => {
+
+        // arrange
+        let expectedLocation = 'https://login.microsoftonline.com/' + this.tenant + '/oauth2/v2.0/logout';
+        let expectedRedirectUrl = '?post_logout_redirect_uri=' + encodeURIComponent('http://www.hneu.com');
+
+        // act
+        let actualUrl = new AadLogoutUrlBuilder().with(this.tenant, this.postLogoutRedirectUrl, EndpointVersion.V2).build();
+
+        // assert
+        expect(_.startsWith(actualUrl, expectedLocation)).toBe(true, 'incorrect location');
+        actualUrl = actualUrl.replace(expectedLocation, '');
+
     });
 
 });

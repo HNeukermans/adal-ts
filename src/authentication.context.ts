@@ -83,7 +83,7 @@ export class AuthenticationContext {
         this.storage.setItem(this.CONSTANTS.STORAGE.IDTOKEN, '');
         this.storage.setItem(this.CONSTANTS.STORAGE.ACCESSTOKEN, '');
 
-        let url = this.logoutUrlBuilder.with(this.config.tenant, this.config.postLogoutRedirectUrl).build();
+        let url = this.logoutUrlBuilder.with(this.config.tenant, this.config.postLogoutRedirectUrl, this.config.endpointVersion).build();
 
         this.navigator.navigate(url);
     }
@@ -96,14 +96,6 @@ export class AuthenticationContext {
 
     private info(message: string): void {
 
-    }
-
-    private createOptions(): any {
-        return {
-            nonce: this.idTokenNonce,
-            tenant: this.config.tenant,
-            clientId: this.config.clientId
-        };
     }
 
     private cloneConfig(obj: any) {

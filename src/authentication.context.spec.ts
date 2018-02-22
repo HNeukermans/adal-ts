@@ -145,7 +145,7 @@ describe('AuthenticationContext', () => {
 
         this.sut.logout();
 
-        expect(this.aadLogoutUrlBuilder.with).toHaveBeenCalledWith(this.config.tenant, this.config.postLogoutRedirectUrl);
+        expect(this.aadLogoutUrlBuilder.with).toHaveBeenCalledWith(this.config.tenant, this.config.postLogoutRedirectUrl, this.config.endpointVersion);
         expect(this.aadLogoutUrlBuilder.build).toHaveBeenCalled();
         expect(this.navigator.navigate).toHaveBeenCalledWith('http://microsoft.com');
     });

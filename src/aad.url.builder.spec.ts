@@ -2,6 +2,7 @@ import { AadUrlBuilder } from './aad.url.builder';
 import { GuidGenerator } from './guid.generator';
 import { AadUrlConfig } from './aad.url.config';
 import * as _ from 'lodash';
+import { EndpointVersion } from './constants';
 
 describe('AadUrlBuilder', () => {
     'use strict';
@@ -50,6 +51,19 @@ describe('AadUrlBuilder', () => {
 
         expect(_.startsWith(actualUrl, expectedNonce)).toBe(true, 'incorrect nonce');
         actualUrl = actualUrl.replace(expectedNonce, '');
+    });
+
+    it('build should create aad url for v2', () => {
+
+        // arrange
+        let expectedLocation = 'https://login.microsoftonline.com/' + this.options.tenant + '/oauth2/v2.0/authorize';
+        this.options.endpointVersion = EndpointVersion.V2;
+
+        // act
+        let actualUrl = new AadUrlBuilder(new GuidGenerator()).with(<AadUrlConfig>this.options).build();
+
+        // assert
+        expect(_.startsWith(actualUrl, expectedLocation)).toBe(true, 'incorrect location');
     });
 
     function createConfig(): AadUrlConfig {
