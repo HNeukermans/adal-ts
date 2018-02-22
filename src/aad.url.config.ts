@@ -1,3 +1,5 @@
+import { EndpointVersion } from './constants';
+
 // all optional properties have generated defaults
 export interface AadUrlConfig {
     nonce: string;
@@ -10,4 +12,5 @@ export interface AadUrlConfig {
     clientRequestId?: string;
     libVersion?: string;
     extraQueryParameter?: string;
+    endpointVersion?: EndpointVersion;
 }

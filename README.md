@@ -64,6 +64,13 @@ let context = Authentication.getContext(config);
 let token = context.getToken();
 ```
 
+### for the new v2 endpoints
+```
+let config = new AdalConfig('clientID', 'unittest.onmicrosoft.com', 'http://localhost');
+config.endpointVersion = EndpointVersion.V2;
+// ... the rest
+```
+
 ## [Adal-ts live demo](http://adal-ts-demo.azurewebsites.net/#/)
 
 login with:  

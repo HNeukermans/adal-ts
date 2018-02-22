@@ -37,6 +37,10 @@ export const Constants = {
         1: 'WARNING:',
         2: 'INFO:',
         3: 'VERBOSE:'
+    },
+    ENDPOINT_TO_URL_PART_MAP: {
+        'V1': '',
+        'V2': 'v2.0/',
     }
 };
 
@@ -45,3 +49,8 @@ export const RequestTypes = {
     RENEW_TOKEN: 'RENEW_TOKEN',
     UNKNOWN: 'UNKNOWN'
 };
+
+export enum EndpointVersion {
+    V1 = 'V1',
+    V2 = 'V2',
+}

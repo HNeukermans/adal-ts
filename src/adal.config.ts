@@ -1,3 +1,5 @@
+import { EndpointVersion } from './constants';
+
 export class AdalConfig {
     public resource: string;
     constructor(public clientId: string,
@@ -5,6 +7,7 @@ export class AdalConfig {
         public redirectUri: string,
         public postLogoutRedirectUrl?: string,
         public responseType?: string,
-        public extraQueryParameter?: string) {
+        public extraQueryParameter?: string,
+        public endpointVersion?: EndpointVersion) {
     };
 }
