@@ -1,24 +1,32 @@
-import { QueryStringDeserializer, hasAadProps } from './query.string.deserializer';
-import { Constants } from './constants';
 import { AadRedirectUrl } from './aad.redirect.url';
-import { UserDecoder } from './user.decoder';
+import { Constants } from './constants';
+import { QueryStringDeserializer } from './query.string.deserializer';
 import { Storage } from './storage';
+import { UserDecoder } from './user.decoder';
+
 export class AadRedirectProcessor {
+  constructor(
+    private queryStringDeserializer: QueryStringDeserializer,
+    private userDecoder: UserDecoder,
+    private storage: Storage,
+    private window: Window
+  ) {}
 
-    constructor(private queryStringDeserializer: QueryStringDeserializer, private userDecoder: UserDecoder, private storage: Storage, private window: Window) {
+  public process(): boolean {
+    const deserializedHash = this.queryStringDeserializer.deserialize(this.window.location.hash);
+
+    const aadHashRe = new AadRedirectUrl(deserializedHash);
+
+    if (aadHashRe.isAadRedirect()) {
+      const token = aadHashRe.idToken || aadHashRe.accesToken;
+      this.userDecoder.decode(token);
+      this.storage.setItem(Constants.STORAGE.IDTOKEN, token);
+      if (aadHashRe.accesToken) this.storage.setItem(Constants.STORAGE.ACCESSTOKEN, aadHashRe.accesToken);
+
+      const lg = this.storage.getItem(Constants.STORAGE.LOGIN_REQUEST);
+      if (lg) this.window.location.assign(lg);
     }
 
-    public process(): boolean {
-
-        let deserializedHash = this.queryStringDeserializer.deserialize(this.window.location.hash);
-        let aadRedirect = new AadRedirectUrl(deserializedHash);
-        if (aadRedirect.isAadRedirect()) {
-            let userProfile = this.userDecoder.decode(aadRedirect.idToken || aadRedirect.accesToken);
-            this.storage.setItem(Constants.STORAGE.IDTOKEN, aadRedirect.idToken || '');
-            this.storage.setItem(Constants.STORAGE.ACCESSTOKEN, aadRedirect.accesToken || '');
-            this.window.location.assign(this.storage.getItem(Constants.STORAGE.LOGIN_REQUEST));
-        }
-
-        return aadRedirect.isAadRedirect();
-    }
+    return aadHashRe.isAadRedirect();
+  }
 }

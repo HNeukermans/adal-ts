@@ -1,4 +1,4 @@
 export interface Storage {
-    setItem(key: string, value: string): void;
-    getItem(key: string): string;
+  setItem(key: string, value: string): void;
+  getItem(key: string): string | null;
 }
