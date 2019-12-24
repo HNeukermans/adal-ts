@@ -1,43 +1,42 @@
+import { AadLogoutUrlBuilder } from './aad.logout.url.builder';
+import { AadRedirectProcessor } from './aad.redirect.processor';
+import { AadUrlBuilder } from './aad.url.builder';
+import { AdalConfig } from './adal.config';
 import { AuthenticationContext } from './authentication.context';
+import { GuidGenerator } from './guid.generator';
 import { LocalStorage } from './local.storage';
 import { Navigator } from './navigator';
-import { AadUrlBuilder } from './aad.url.builder';
-import { GuidGenerator } from './guid.generator';
-import { Constants } from './constants';
+import { QueryStringDeserializer } from './query.string.deserializer';
+import { SessionStorage } from './session.storage';
 import { UserDecoder } from './user.decoder';
-import { AdalConfig } from './adal.config';
-import { AadRedirectProcessor } from './aad.redirect.processor';
-import { QueryStringDeserializer, hasAadProps } from './query.string.deserializer';
-import { AadLogoutUrlBuilder } from './aad.logout.url.builder';
 
+export type StorageType = 'sessionStorage' | 'localStorage';
 
 export class Authentication {
+  public static getContext(
+    configuration: AdalConfig,
+    storage: StorageType = 'localStorage'
+  ): AuthenticationContext {
+    const context = new AuthenticationContext(
+      configuration,
+      storage === 'localStorage' ? new LocalStorage() : new SessionStorage(),
+      new Navigator(),
+      new GuidGenerator(),
+      new AadUrlBuilder(new GuidGenerator()),
+      new UserDecoder(),
+      new AadLogoutUrlBuilder()
+    );
+    // TODO this.enableNativeLogging();
+    return context;
+  }
 
-    constructor() {
-    }
-
-    public static getContext(configuration: AdalConfig): AuthenticationContext {
-        let context = new AuthenticationContext(
-            configuration,
-            new LocalStorage(),
-            new Navigator(),
-            new GuidGenerator(),
-            new AadUrlBuilder(new GuidGenerator()),
-            new UserDecoder(),
-            new AadLogoutUrlBuilder());
-        // TODO this.enableNativeLogging();
-        return context;
-    }
-
-    public static getAadRedirectProcessor() {
-
-        let p = new AadRedirectProcessor(
-            new QueryStringDeserializer(),
-            new UserDecoder(),
-            new LocalStorage(),
-            window);
-        return p;
-    }
+  public static getAadRedirectProcessor(storage: StorageType) {
+    const p = new AadRedirectProcessor(
+      new QueryStringDeserializer(),
+      new UserDecoder(),
+      storage === 'localStorage' ? new LocalStorage() : new SessionStorage(),
+      window
+    );
+    return p;
+  }
 }
-
-
