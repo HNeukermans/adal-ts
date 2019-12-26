@@ -13,7 +13,7 @@
     "build": "npm run clean && tsc && npm run del-scenario",
     "webpack": "webpack",
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
-    "publish": "ci-publish",
+    "ci-publish": "ci-publish --access public",
     "report-coverage": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "update": "ncu -u"
   },
