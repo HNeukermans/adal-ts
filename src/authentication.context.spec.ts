@@ -7,7 +7,7 @@ import { AadLogoutUrlBuilder } from './aad.logout.url.builder';
 import { GuidGenerator } from './guid.generator';
 import { UserDecoder } from './user.decoder';
 import { Constants } from './constants';
-import { ATenantConfig, ATenantUrl } from './scenario/a.production.adal.config';
+import { ATenantConfig } from './scenario/a.production.adal.config';
 import {
   AadProductionTokenSample,
   AadProductionUserProfileSample
@@ -79,11 +79,11 @@ describe('AuthenticationContext', () => {
     expect((localStorage.setItem as any).calls.argsFor(0)).toEqual(
       jasmine.arrayContaining([Constants.STORAGE.LOGIN_REQUEST])
     );
-    expect((localStorage.setItem as any).argsFor(1)).toEqual([Constants.STORAGE.STATE_LOGIN, 'xxx']);
-    expect((localStorage.setItem as any).argsFor(2)).toEqual([Constants.STORAGE.NONCE_IDTOKEN, 'xxx']);
-    expect((localStorage.setItem as any).argsFor(3)).toEqual([Constants.STORAGE.LOGIN_ERROR, '']);
-    expect((localStorage.setItem as any).argsFor(4)).toEqual([Constants.STORAGE.ERROR, '']);
-    expect((localStorage.setItem as any).argsFor(5)).toEqual([Constants.STORAGE.ERROR_DESCRIPTION, '']);
+    expect((localStorage.setItem as any).calls.argsFor(1)).toEqual([Constants.STORAGE.STATE_LOGIN, 'xxx']);
+    expect((localStorage.setItem as any).calls.argsFor(2)).toEqual([Constants.STORAGE.NONCE_IDTOKEN, 'xxx']);
+    expect((localStorage.setItem as any).calls.argsFor(3)).toEqual([Constants.STORAGE.LOGIN_ERROR, '']);
+    expect((localStorage.setItem as any).calls.argsFor(4)).toEqual([Constants.STORAGE.ERROR, '']);
+    expect((localStorage.setItem as any).calls.argsFor(5)).toEqual([Constants.STORAGE.ERROR_DESCRIPTION, '']);
   });
 
   it('getUser should decode idtoken in the storage ', () => {
@@ -135,15 +135,17 @@ describe('AuthenticationContext', () => {
     expect(user).toBe(null);
   });
 
-  it('logout should clear state ', () => {
+  it('logout should clear state', () => {
+    sut.login();
+
     spyOn(localStorage, 'setItem');
     spyOn(navigator, 'navigate');
 
     sut.logout();
 
-    expect((localStorage.setItem as any).argsFor(0)).toEqual([Constants.STORAGE.NONCE_IDTOKEN, '']);
-    expect((localStorage.setItem as any).argsFor(1)).toEqual([Constants.STORAGE.STATE_LOGIN, '']);
-    expect((localStorage.setItem as any).argsFor(2)).toEqual([Constants.STORAGE.IDTOKEN, '']);
+    expect((localStorage.setItem as any).calls.argsFor(0)).toEqual([Constants.STORAGE.NONCE_IDTOKEN, '']);
+    expect((localStorage.setItem as any).calls.argsFor(1)).toEqual([Constants.STORAGE.STATE_LOGIN, '']);
+    expect((localStorage.setItem as any).calls.argsFor(2)).toEqual([Constants.STORAGE.IDTOKEN, '']);
   });
 
   it('logout should build url and navigate', () => {

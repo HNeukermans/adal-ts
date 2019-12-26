@@ -3,6 +3,13 @@
 import { AadUrlConfig } from './aad.url.config';
 import { GuidGenerator } from './guid.generator';
 
+const urlJoins = (...values: string[]) =>
+  values.reduce((p: string, c: string) => {
+    if (typeof p !== 'string') return c;
+    if (typeof c !== 'string') return p;
+    return p.endsWith('/') || c.startsWith('/') ? p + c : p + '/' + c;
+  });
+
 export class AadUrlBuilder {
   private instance!: string;
   private tenant!: string;
@@ -19,7 +26,11 @@ export class AadUrlBuilder {
   private extraQueryParameter!: string;
   private guidGenerator: GuidGenerator;
   private scope?: string;
+  private endpointVersion!: string;
+
   public static MicrosoftLoginUrl = 'https://login.microsoftonline.com/';
+  public static V1_END_POINT = 'oauth2/authorize';
+  public static V2_END_POINT = 'oauth2/v2.0/authorize';
 
   constructor(guidGenerator: GuidGenerator) {
     this.guidGenerator = guidGenerator;
@@ -45,16 +56,17 @@ export class AadUrlBuilder {
     this.libVersion = options.libVersion || this.libVersion;
     this.extraQueryParameter = options.extraQueryParameter || this.extraQueryParameter;
     this.scope = options.scope;
+    this.endpointVersion = options.endpointVersion || AadUrlBuilder.V2_END_POINT;
 
     return this;
   }
 
   public build() {
     let urlNavigate = this.signinPolicy
-      ? this.instance + this.tenant + '/' + this.signinPolicy + '/oauth2/v2.0/authorize'
-      : this.instance + this.tenant + '/oauth2/authorize';
-    urlNavigate = urlNavigate + this.serialize() + this.addLibMetadata();
-    debugger;
+      ? urlJoins(this.instance, this.tenant, this.signinPolicy, this.endpointVersion)
+      : urlJoins(this.instance, this.tenant, this.endpointVersion);
+
+    urlNavigate += this.serialize() + this.addLibMetadata();
     return urlNavigate;
   }
 

@@ -2,13 +2,13 @@
   "compilerOptions": {
     "noImplicitAny": true,
     "module": "commonjs",
-    "target": "ES5",
+    "target": "ES6",
     "outDir": "dist/",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "sourceMap": true,
     "declaration": true,
-    "lib": ["dom", "es2015.collection", "es2015.promise", "es5"],
+    "lib": ["dom", "es2015.collection", "es2015.promise", "ES6"],
     "moduleResolution": "node",
     "suppressImplicitAnyIndexErrors": true,
     "suppressExcessPropertyErrors": true
@@ -19,5 +19,5 @@
   //     "index.ts",
   //     "custom.typings.d.ts"
   // ],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "scenario", "**/*.spec.ts"]
 }

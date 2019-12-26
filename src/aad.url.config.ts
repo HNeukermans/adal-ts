@@ -14,4 +14,5 @@ export interface AadUrlConfig {
   libVersion?: string;
   extraQueryParameter?: string;
   scope?: string;
+  endpointVersion?: string;
 }
