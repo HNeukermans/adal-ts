@@ -1,20 +1,21 @@
 /**
  * Webpack Plugins
  */
-const LoaderOptionsPlugin = require("webpack/lib/LoaderOptionsPlugin");
+const LoaderOptionsPlugin = require('webpack/lib/LoaderOptionsPlugin');
 
 module.exports = function() {
   return {
-    devtool: "inline-source-map",
+    devtool: 'inline-source-map',
 
     resolve: {
-      extensions: [".ts", ".js"]
+      extensions: ['.ts', '.js']
     },
     module: {
       rules: [
         {
           test: /\.ts$/,
-          loader: "ts-loader"
+          loader: 'ts-loader',
+          options: { configFile: 'tsconfig.test.json' }
           // query: {
           //   sourceMap: false,
           //   inlineSourceMap: true,
@@ -24,9 +25,9 @@ module.exports = function() {
           // }
         },
         {
-          enforce: "post",
+          enforce: 'post',
           test: /\.(js|ts)$/,
-          loader: "istanbul-instrumenter-loader",
+          loader: 'istanbul-instrumenter-loader',
           exclude: [/\.(e2e|spec)\.ts$/, /node_modules/]
         }
       ]

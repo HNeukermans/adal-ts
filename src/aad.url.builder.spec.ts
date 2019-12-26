@@ -15,7 +15,8 @@ describe('AadUrlBuilder', () => {
 
   it('build should create aad url', () => {
     // arrange
-    let expectedLocation = 'https://login.microsoftonline.com/' + options.tenant + '/oauth2/authorize';
+    let expectedLocation =
+      'https://login.microsoftonline.com/' + options.tenant + '/' + AadUrlBuilder.V2_END_POINT;
     let expectedResponseType = '?response_type=' + options.responseType;
     let expectedClientId = '&client_id=' + options.clientId;
     let expectedRedirectUrl =
@@ -29,6 +30,7 @@ describe('AadUrlBuilder', () => {
     let actualUrl = new AadUrlBuilder(new GuidGenerator()).with(options).build();
 
     // assert
+    expect(_.includes(actualUrl, AadUrlBuilder.V2_END_POINT)).toBe(true, 'incorrect END_POINT');
     expect(_.startsWith(actualUrl, expectedLocation)).toBe(true, 'incorrect location');
     actualUrl = actualUrl.replace(expectedLocation, '');
 
