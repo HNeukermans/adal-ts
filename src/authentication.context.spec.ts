@@ -7,156 +7,166 @@ import { AadLogoutUrlBuilder } from './aad.logout.url.builder';
 import { GuidGenerator } from './guid.generator';
 import { UserDecoder } from './user.decoder';
 import { Constants } from './constants';
-import { ATenantConfig, ATenantUrl } from './scenario/a.production.adal.config';
-import { AadProductionTokenSample, AadProductionUserProfileSample } from './scenario/a.production.aad.response';
+import { ATenantConfig } from './scenario/a.production.adal.config';
+import {
+  AadProductionTokenSample,
+  AadProductionUserProfileSample
+} from './scenario/a.production.aad.response';
 import * as _ from 'lodash';
+import { AdalConfig } from './adal.config';
+
+let config: AdalConfig;
+let localStorage: LocalStorage;
+let navigator: Navigator;
+let guidGenerator: GuidGenerator;
+let aadUrlBuilder: AadUrlBuilder;
+let aadLogoutUrlBuilder: AadLogoutUrlBuilder;
+let userDecoder: UserDecoder;
+let sut: AuthenticationContext;
 
 describe('AuthenticationContext', () => {
-    'use strict';
+  'use strict';
 
-    beforeEach(() => {
-        this.config = ATenantConfig;
-        this.localStorage = new LocalStorage();
-        this.navigator = new Navigator();
-        this.guidGenerator = new GuidGenerator();
-        this.aadUrlBuilder = new AadUrlBuilder(this.guidGenerator);
-        this.aadLogoutUrlBuilder = new AadLogoutUrlBuilder();
-        this.userDecoder = new UserDecoder();
+  beforeEach(() => {
+    config = ATenantConfig;
+    localStorage = new LocalStorage();
+    navigator = new Navigator();
+    guidGenerator = new GuidGenerator();
+    aadUrlBuilder = new AadUrlBuilder(guidGenerator);
+    aadLogoutUrlBuilder = new AadLogoutUrlBuilder();
+    userDecoder = new UserDecoder();
+  });
+
+  beforeEach(() => {
+    sut = new AuthenticationContext(
+      config,
+      localStorage,
+      navigator,
+      guidGenerator,
+      aadUrlBuilder,
+      userDecoder,
+      aadLogoutUrlBuilder
+    );
+  });
+
+  it('login should build the url', () => {
+    spyOn(navigator, 'navigate');
+    spyOn(aadUrlBuilder, 'with').and.callThrough();
+    spyOn(aadUrlBuilder, 'build').and.callThrough();
+
+    sut.login();
+
+    expect(aadUrlBuilder.with).toHaveBeenCalledWith(jasmine.objectContaining(config));
+    expect(aadUrlBuilder.build).toHaveBeenCalled();
+  });
+
+  it('login should navigate to aad url', () => {
+    spyOn(navigator, 'navigate');
+    spyOn(guidGenerator, 'generate').and.returnValue('xxx');
+
+    sut.login();
+
+    expect(navigator.navigate).toHaveBeenCalled();
+    // expect(navigator.navigate).toHaveBeenCalledWith(ATenantUrl); //should create a  specific matcher gfor this
+  });
+
+  it('login should store its state', () => {
+    spyOn(localStorage, 'setItem');
+    spyOn(guidGenerator, 'generate').and.returnValue('xxx');
+    spyOn(navigator, 'navigate');
+    sut.login();
+
+    expect((localStorage.setItem as any).calls.argsFor(0)).toEqual(
+      jasmine.arrayContaining([Constants.STORAGE.LOGIN_REQUEST])
+    );
+    expect((localStorage.setItem as any).calls.argsFor(1)).toEqual([Constants.STORAGE.STATE_LOGIN, 'xxx']);
+    expect((localStorage.setItem as any).calls.argsFor(2)).toEqual([Constants.STORAGE.NONCE_IDTOKEN, 'xxx']);
+    expect((localStorage.setItem as any).calls.argsFor(3)).toEqual([Constants.STORAGE.LOGIN_ERROR, '']);
+    expect((localStorage.setItem as any).calls.argsFor(4)).toEqual([Constants.STORAGE.ERROR, '']);
+    expect((localStorage.setItem as any).calls.argsFor(5)).toEqual([Constants.STORAGE.ERROR_DESCRIPTION, '']);
+  });
+
+  it('getUser should decode idtoken in the storage ', () => {
+    spyOn(localStorage, 'setItem').and.callFake(() => {
+      return AadProductionTokenSample;
+    });
+    spyOn(userDecoder, 'decode').and.callThrough();
+
+    let user = sut.getUser();
+
+    expect(userDecoder.decode).toHaveBeenCalledWith(AadProductionTokenSample);
+    expect(user).toEqual(AadProductionUserProfileSample);
+  });
+
+  it('getUser should return null if idtoken is empty', () => {
+    spyOn(localStorage, 'getItem').and.callFake(() => {
+      return '';
     });
 
-    beforeEach(() => {
-        this.sut = new AuthenticationContext(
-            this.config, this.localStorage, this.navigator,
-            this.guidGenerator, this.aadUrlBuilder, this.userDecoder, this.aadLogoutUrlBuilder);
+    let user = sut.getUser();
+
+    expect(user).toBe(null);
+  });
+
+  it('getUser should return null if idtoken is undefined', () => {
+    spyOn(localStorage, 'getItem').and.callFake(() => {
+      return;
     });
 
-    it('login should build the url', () => {
+    let user = sut.getUser();
+    expect(user).toBe(null);
+  });
 
-        spyOn(this.navigator, 'navigate');
-        spyOn(this.aadUrlBuilder, 'with').and.callThrough();
-        spyOn(this.aadUrlBuilder, 'build').and.callThrough();
-
-        this.sut.login();
-
-        expect(this.aadUrlBuilder.with).toHaveBeenCalledWith(jasmine.objectContaining(this.config));
-        expect(this.aadUrlBuilder.build).toHaveBeenCalled();
+  it('getUser should return null if idtoken is null', () => {
+    spyOn(localStorage, 'getItem').and.callFake(function() {
+      return <any>null;
     });
+    let user = sut.getUser();
 
-    it('login should navigate to aad url', () => {
-        spyOn(this.navigator, 'navigate');
-        spyOn(this.guidGenerator, 'generate').and.returnValue('xxx');
+    expect(user).toBe(null);
+  });
 
-        this.sut.login();
-
-        expect(this.navigator.navigate).toHaveBeenCalled();
-        // expect(this.navigator.navigate).toHaveBeenCalledWith(ATenantUrl); //should create a  specific matcher gfor this
+  it('getUser should return null if idtoken is null', () => {
+    spyOn(localStorage, 'getItem').and.callFake(function() {
+      return '    ';
     });
+    let user = sut.getUser();
 
-    it('login should store its state', () => {
-        spyOn(this.localStorage, 'setItem');
-        spyOn(this.guidGenerator, 'generate').and.returnValue('xxx');
-        spyOn(this.navigator, 'navigate');
-        this.sut.login();
+    expect(user).toBe(null);
+  });
 
-        expect(this.localStorage.setItem.calls.argsFor(0)).toEqual(jasmine.arrayContaining([Constants.STORAGE.LOGIN_REQUEST]));
-        expect(this.localStorage.setItem.calls.argsFor(1)).toEqual([Constants.STORAGE.STATE_LOGIN, 'xxx']);
-        expect(this.localStorage.setItem.calls.argsFor(2)).toEqual([Constants.STORAGE.NONCE_IDTOKEN, 'xxx']);
-        expect(this.localStorage.setItem.calls.argsFor(3)).toEqual([Constants.STORAGE.LOGIN_ERROR, '']);
-        expect(this.localStorage.setItem.calls.argsFor(4)).toEqual([Constants.STORAGE.ERROR, '']);
-        expect(this.localStorage.setItem.calls.argsFor(5)).toEqual([Constants.STORAGE.ERROR_DESCRIPTION, '']);
-    });
+  it('logout should clear state', () => {
+    sut.login();
 
-    it('getUser should decode idtoken in the storage ', () => {
+    spyOn(localStorage, 'setItem');
+    spyOn(navigator, 'navigate');
 
-        spyOn(this.localStorage, 'setItem').and.callFake(function () {
-            return AadProductionTokenSample;
-        });
-        spyOn(this.userDecoder, 'decode').and.callThrough();
+    sut.logout();
 
-        let user = this.sut.getUser();
+    expect((localStorage.setItem as any).calls.argsFor(0)).toEqual([Constants.STORAGE.NONCE_IDTOKEN, '']);
+    expect((localStorage.setItem as any).calls.argsFor(1)).toEqual([Constants.STORAGE.STATE_LOGIN, '']);
+    expect((localStorage.setItem as any).calls.argsFor(2)).toEqual([Constants.STORAGE.IDTOKEN, '']);
+  });
 
-        expect(this.userDecoder.decode).toHaveBeenCalledWith(AadProductionTokenSample);
-        expect(user).toEqual(AadProductionUserProfileSample);
+  it('logout should build url and navigate', () => {
+    spyOn(aadLogoutUrlBuilder, 'with').and.callThrough();
+    spyOn(aadLogoutUrlBuilder, 'build').and.returnValue('http://microsoft.com');
+    spyOn(navigator, 'navigate');
 
-    });
+    sut.logout();
 
-    it('getUser should return null if idtoken is empty', () => {
+    expect(aadLogoutUrlBuilder.with).toHaveBeenCalledWith(config.tenant, config.postLogoutRedirectUrl);
+    expect(aadLogoutUrlBuilder.build).toHaveBeenCalled();
+    expect(navigator.navigate).toHaveBeenCalledWith('http://microsoft.com');
+  });
 
-        spyOn(this.localStorage, 'getItem').and.callFake(function () {
-            return '';
-        });
+  it('getToken should call localStorage twice', () => {
+    spyOn(localStorage, 'getItem');
+    spyOn(navigator, 'navigate');
 
-        let user = this.sut.getUser();
-
-        expect(user).toBe(null);
-
-    });
-
-    it('getUser should return null if idtoken is undefined', () => {
-
-        spyOn(this.localStorage, 'getItem').and.callFake(function () {
-            return <any>undefined;
-        });
-        let user = this.sut.getUser();
-
-        expect(user).toBe(null);
-
-    });
-
-    it('getUser should return null if idtoken is null', () => {
-
-        spyOn(this.localStorage, 'getItem').and.callFake(function () {
-            return <any>null;
-        });
-        let user = this.sut.getUser();
-
-        expect(user).toBe(null);
-
-    });
-
-    it('getUser should return null if idtoken is null', () => {
-
-        spyOn(this.localStorage, 'getItem').and.callFake(function () {
-            return '    ';
-        });
-        let user = this.sut.getUser();
-
-        expect(user).toBe(null);
-
-    });
-
-    it('logout should clear state ', () => {
-
-        spyOn(this.localStorage, 'setItem');
-        spyOn(this.navigator, 'navigate');
-
-        this.sut.logout();
-
-        expect(this.localStorage.setItem.calls.argsFor(0)).toEqual([Constants.STORAGE.NONCE_IDTOKEN, '']);
-        expect(this.localStorage.setItem.calls.argsFor(1)).toEqual([Constants.STORAGE.STATE_LOGIN, '']);
-        expect(this.localStorage.setItem.calls.argsFor(2)).toEqual([Constants.STORAGE.IDTOKEN, '']);
-    });
-
-    it('logout should build url and navigate', () => {
-
-        spyOn(this.aadLogoutUrlBuilder, 'with').and.callThrough();
-        spyOn(this.aadLogoutUrlBuilder, 'build').and.returnValue('http://microsoft.com');
-        spyOn(this.navigator, 'navigate');
-
-        this.sut.logout();
-
-        expect(this.aadLogoutUrlBuilder.with).toHaveBeenCalledWith(this.config.tenant, this.config.postLogoutRedirectUrl);
-        expect(this.aadLogoutUrlBuilder.build).toHaveBeenCalled();
-        expect(this.navigator.navigate).toHaveBeenCalledWith('http://microsoft.com');
-    });
-
-    it('getToken should call localStorage twice', () => {
-        spyOn(this.localStorage, 'getItem');
-        spyOn(this.navigator, 'navigate');
-
-        this.sut.getToken();
-        expect(this.localStorage.getItem).toHaveBeenCalledWith(Constants.STORAGE.IDTOKEN);
-        expect(this.localStorage.getItem).toHaveBeenCalledWith(Constants.STORAGE.ACCESSTOKEN);
-        expect(this.localStorage.getItem).toHaveBeenCalledTimes(2);
-    });
+    sut.getToken();
+    expect(localStorage.getItem).toHaveBeenCalledWith(Constants.STORAGE.IDTOKEN);
+    expect(localStorage.getItem).toHaveBeenCalledWith(Constants.STORAGE.ACCESSTOKEN);
+    expect(localStorage.getItem).toHaveBeenCalledTimes(2);
+  });
 });

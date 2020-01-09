@@ -1,84 +1,115 @@
-import { GuidGenerator } from './guid.generator';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { AadUrlConfig } from './aad.url.config';
+import { GuidGenerator } from './guid.generator';
+
+const urlJoins = (...values: string[]) =>
+  values.reduce((p: string, c: string) => {
+    if (typeof p !== 'string') return c;
+    if (typeof c !== 'string') return p;
+    return p.endsWith('/') || c.startsWith('/') ? p + c : p + '/' + c;
+  });
+
 export class AadUrlBuilder {
+  private instance!: string;
+  private tenant!: string;
+  private signinPolicy?: string;
+  private nonce?: string;
+  private responseType: string;
+  private clientId!: string;
+  private resource!: string;
+  private redirectUri: string;
+  private state: string;
+  private slice!: string;
+  private clientRequestId: string;
+  private libVersion: string;
+  private extraQueryParameter!: string;
+  private guidGenerator: GuidGenerator;
+  private scope?: string;
+  private endpointVersion!: string;
 
-    private nonce: string;
-    private tenant: string;
-    private responseType: string;
-    private clientId: string;
-    private resource: string;
-    private redirectUri: string;
-    private state: string;
-    private slice: string;
-    private clientRequestId: string;
-    private libVersion: string;
-    private extraQueryParameter: string;
-    private guidGenerator: GuidGenerator;
-    public static MicrosoftLoginUrl: string = 'https://login.microsoftonline.com/';
+  public static MicrosoftLoginUrl = 'https://login.microsoftonline.com/';
+  public static V1_END_POINT = 'oauth2/authorize';
+  public static V2_END_POINT = 'oauth2/v2.0/authorize';
 
-    constructor(guidGenerator: GuidGenerator) {
-        this.guidGenerator = guidGenerator;
+  constructor(guidGenerator: GuidGenerator) {
+    this.guidGenerator = guidGenerator;
 
-        this.state = this.guidGenerator.generate();
-        this.clientRequestId = this.guidGenerator.generate();
-        this.responseType = 'id_token';
-        this.libVersion = '1.0.0';
-        this.redirectUri = window.location.href;
+    this.state = this.guidGenerator.generate();
+    this.clientRequestId = this.guidGenerator.generate();
+    this.responseType = 'id_token';
+    this.libVersion = '1.0.0';
+    this.redirectUri = window.location.href;
+  }
+
+  public with(options: AadUrlConfig): AadUrlBuilder {
+    this.instance = options.instance ?? AadUrlBuilder.MicrosoftLoginUrl;
+    this.tenant = options.tenant;
+    this.signinPolicy = options.signinPolicy;
+    this.nonce = options.nonce ?? 'defaultNonce';
+    this.clientId = options.clientId;
+    this.responseType = options.responseType || this.responseType;
+    this.redirectUri = options.redirectUri || this.redirectUri;
+    this.state = options.state || this.state;
+    this.slice = options.slice || this.slice;
+    this.clientRequestId = options.clientRequestId || this.clientRequestId;
+    this.libVersion = options.libVersion || this.libVersion;
+    this.extraQueryParameter = options.extraQueryParameter || this.extraQueryParameter;
+    this.scope = options.scope;
+    this.endpointVersion = options.endpointVersion || AadUrlBuilder.V2_END_POINT;
+
+    return this;
+  }
+
+  public build() {
+    let urlNavigate = this.signinPolicy
+      ? urlJoins(this.instance, this.tenant, this.signinPolicy, this.endpointVersion)
+      : urlJoins(this.instance, this.tenant, this.endpointVersion);
+
+    urlNavigate += this.serialize() + this.addLibMetadata();
+    return urlNavigate;
+  }
+
+  private serialize(): string {
+    const str = new Array<string>();
+    str.push('?response_type=' + this.responseType);
+
+    str.push('client_id=' + encodeURIComponent(this.clientId));
+    if (this.resource) {
+      str.push('resource=' + encodeURIComponent(this.resource));
     }
 
-    public with(options: AadUrlConfig): AadUrlBuilder {
+    str.push('redirect_uri=' + encodeURIComponent(this.redirectUri));
 
-        this.nonce = options.nonce;
-        this.tenant = options.tenant;
-        this.clientId = options.clientId;
-        this.responseType = options.responseType || this.responseType;
-        this.redirectUri = options.redirectUri || this.redirectUri;
-        this.state = options.state;
-        this.slice = options.slice || this.slice;
-        this.clientRequestId = options.clientRequestId || this.clientRequestId;
-        this.libVersion = options.libVersion || this.libVersion;
-        this.extraQueryParameter = options.extraQueryParameter || this.extraQueryParameter;
-        return this;
+    if (this.state) {
+      str.push('state=' + encodeURIComponent(this.state));
     }
 
-    public build() {
+    str.push('client-request-id=' + encodeURIComponent(this.clientRequestId));
 
-        var urlNavigate = AadUrlBuilder.MicrosoftLoginUrl + this.tenant + '/oauth2/authorize';
-        urlNavigate = urlNavigate + this.serialize() + this.addLibMetadata();
-        urlNavigate = urlNavigate + '&nonce=' + encodeURIComponent(this.nonce);
-        return urlNavigate;
+    if (this.slice) {
+      str.push('slice=' + encodeURIComponent(this.slice));
     }
 
-    private serialize(): string {
+    if (this.nonce) {
+      str.push('nonce=' + this.nonce);
+    }
 
-        var str: any = [];
-        str.push('?response_type=' + this.responseType);
-        str.push('client_id=' + encodeURIComponent(this.clientId));
-        if (this.resource) {
-            str.push('resource=' + encodeURIComponent(this.resource));
-        }
+    if(this.scope){
+      str.push('scope=' + this.scope);
+    }else str.push('scope=openid');
+    
 
-        str.push('redirect_uri=' + encodeURIComponent(this.redirectUri));
-        str.push('state=' + encodeURIComponent(this.state));
+    if (this.extraQueryParameter) {
+      str.push(this.extraQueryParameter);
+    }
 
-        if (this.slice) {
-            str.push('slice=' + encodeURIComponent(this.slice));
-        }
+    return str.join('&');
+  }
 
-        if (this.extraQueryParameter) {
-            str.push(this.extraQueryParameter);
-        }
-
-        // var correlationId = this.clientRequestId ? obj.correlationId : new GuidGenerator().generate();
-        str.push('client-request-id=' + encodeURIComponent(this.clientRequestId));
-
-        return str.join('&');
-    };
-
-    private addLibMetadata = function () {
-        // x-client-SKU
-        // x-client-Ver
-        return '&x-client-SKU=Js&x-client-Ver=' + this.libVersion;
-    };
-
+  private addLibMetadata = () => {
+    // x-client-SKU
+    // x-client-Ver
+    return '&x-client-SKU=Js&x-client-Ver=' + this.libVersion;
+  };
 }

@@ -2,35 +2,44 @@ import { QueryStringDeserializer } from './query.string.deserializer';
 import { UserDecoder } from './user.decoder';
 import { LocalStorage } from './local.storage';
 import { Constants } from './constants';
-import { AadProductionTokenSample, AadProductionRedirectHash, AadProductionUserProfileSample } from './scenario/a.production.aad.response';
+import {
+  AadProductionTokenSample,
+  AadProductionRedirectHash,
+  AadProductionUserProfileSample
+} from './scenario/a.production.aad.response';
 import { AadRedirectProcessor } from './aad.redirect.processor';
 
+let localStorage: LocalStorage;
+let window: Window;
+let userDecoder: UserDecoder;
+let queryStringDeserializer: QueryStringDeserializer;
+let sut: AadRedirectProcessor;
+
 describe('AadRedirectProcessor', () => {
-    'use strict';
+  'use strict';
 
-    beforeEach(() => {
-        this.localStorage = new LocalStorage();
-        this.window = <Window>{ location: { hash: '' } };
-        this.window.location.assign = function () { };
-        this.userDecoder = new UserDecoder();
-        this.queryStringDeserializer = new QueryStringDeserializer();
-    });
+  beforeEach(() => {
+    localStorage = new LocalStorage();
+    window = <Window>{ location: { hash: '' } };
+    window.location.assign = function() {};
+    userDecoder = new UserDecoder();
+    queryStringDeserializer = new QueryStringDeserializer();
+  });
 
-    beforeEach(() => {
-        this.window.location.hash = AadProductionRedirectHash;
-        this.sut = new AadRedirectProcessor(this.queryStringDeserializer, this.userDecoder, this.localStorage, this.window);
-    });
+  beforeEach(() => {
+    window.location.hash = AadProductionRedirectHash;
+    sut = new AadRedirectProcessor(queryStringDeserializer, userDecoder, localStorage, window);
+  });
 
-    it('processor should process aadredirect', () => {
+  it('processor should process aadredirect', () => {
+    spyOn(queryStringDeserializer, 'deserialize').and.callThrough();
+    spyOn(userDecoder, 'decode').and.callThrough();
+    spyOn(localStorage, 'setItem').and.callThrough();
 
-        spyOn(this.queryStringDeserializer, 'deserialize').and.callThrough();
-        spyOn(this.userDecoder, 'decode').and.callThrough();
-        spyOn(this.localStorage, 'setItem').and.callThrough();
+    sut.process();
 
-        this.sut.process();
-
-        expect(this.queryStringDeserializer.deserialize).toHaveBeenCalledWith(AadProductionRedirectHash);
-        expect(this.userDecoder.decode).toHaveBeenCalledWith(AadProductionTokenSample);
-        expect(this.localStorage.setItem).toHaveBeenCalledWith(Constants.STORAGE.IDTOKEN, AadProductionTokenSample);
-    });
+    expect(queryStringDeserializer.deserialize).toHaveBeenCalledWith(AadProductionRedirectHash);
+    expect(userDecoder.decode).toHaveBeenCalledWith(AadProductionTokenSample);
+    expect(localStorage.setItem).toHaveBeenCalledWith(Constants.STORAGE.IDTOKEN, AadProductionTokenSample);
+  });
 });

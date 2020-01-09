@@ -11,17 +11,10 @@ Thumbs.db
 
 coverage/
 
+src
 !dist
 
 scenario
-
-# TypeScript source files, apart generated type definitions
-**/*.ts
-!**/*.d.ts
-
-**/*.js
-
-dist/index.js
 
 
 # Other generated files
@@ -35,4 +28,4 @@ tsconfig.*
 
 dist/scenario
 
-webpack.config.js
+webpack.*
