@@ -2,6 +2,7 @@
 
 import { AadLogoutUrlBuilder } from './aad.logout.url.builder';
 import { AadUrlBuilder } from './aad.url.builder';
+import { AadUrlConfig } from './aad.url.config';
 import { AdalConfig } from './adal.config';
 import { Constants } from './constants';
 import { GuidGenerator } from './guid.generator';
@@ -114,17 +115,10 @@ export class AuthenticationContext {
     };
   }
 
-  private cloneConfig(obj: any) {
+  private cloneConfig(obj: AdalConfig):AadUrlConfig {
     if (null === obj || 'object' !== typeof obj) {
-      return obj;
+      return undefined;
     }
-
-    const copy: any = {};
-    for (const attr in obj) {
-      if (obj.hasOwnProperty(attr)) {
-        copy[attr] = obj[attr];
-      }
-    }
-    return copy;
+    return {...obj,scope:Array.isArray( obj.scope)?obj.scope.join(" "):obj.scope};
   }
 }
