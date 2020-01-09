@@ -9,7 +9,7 @@ export class AdalConfig {
     public postLogoutRedirectUrl?: string,
     public responseType?: string,
     public extraQueryParameter?: string,
-    public scope?: Array<string>,
+    public scope?: Array<string>|string,
     public endpointVersion?: string
   ) {}
 }
