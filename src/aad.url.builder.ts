@@ -95,9 +95,10 @@ export class AadUrlBuilder {
       str.push('nonce=' + this.nonce);
     }
 
-    if (!this.scope && this.signinPolicy) {
-      str.push('scope=openid');
-    }
+    if(this.scope){
+      str.push('scope=' + this.scope);
+    }else str.push('scope=openid');
+    
 
     if (this.extraQueryParameter) {
       str.push(this.extraQueryParameter);
